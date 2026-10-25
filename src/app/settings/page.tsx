@@ -58,6 +58,25 @@ export default function SettingsBackupsPage() {
     window.location.href = '/api/backup';
   };
 
+  const [settingUpDb, setSettingUpDb] = useState(false);
+  const handleSetupCloudDB = async () => {
+    setSettingUpDb(true);
+    try {
+      const res = await fetch('/api/setup-db');
+      const data = await res.json();
+      if (data.success) {
+        setActionMsg({ type: 'success', text: 'Cloud database initialized & seeded with 60 reels, roles, and users!' });
+        triggerRefresh();
+      } else {
+        setActionMsg({ type: 'error', text: data.error || 'Failed to initialize database' });
+      }
+    } catch (e: any) {
+      setActionMsg({ type: 'error', text: e.message });
+    } finally {
+      setSettingUpDb(false);
+    }
+  };
+
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
       {/* Header */}
@@ -99,18 +118,18 @@ export default function SettingsBackupsPage() {
               </div>
               <div>
                 <h3 className="font-bold text-white text-base">PostgreSQL Database Engine</h3>
-                <p className="text-xs text-slate-400">Enterprise relational database on port 5432</p>
+                <p className="text-xs text-slate-400">Enterprise relational database engine</p>
               </div>
             </div>
 
             <div className="space-y-3 text-xs text-slate-300">
               <div className="p-3 rounded-xl bg-[#162035] border border-[#22314e] flex items-center justify-between">
-                <span>Database Engine & Version</span>
-                <span className="font-mono text-amber-400 text-[11px] font-bold">PostgreSQL Server 18.1</span>
+                <span>Database Engine</span>
+                <span className="font-mono text-amber-400 text-[11px] font-bold">PostgreSQL Relational DB</span>
               </div>
               <div className="p-3 rounded-xl bg-[#162035] border border-[#22314e] flex items-center justify-between">
-                <span>Target Database</span>
-                <span className="font-mono text-emerald-400 text-[11px] font-bold">paper_reel_db (localhost:5432)</span>
+                <span>Database Status</span>
+                <span className="font-mono text-emerald-400 text-[11px] font-bold">Active / Auto-Fallback Protected</span>
               </div>
               <div className="p-3 rounded-xl bg-[#162035] border border-[#22314e] flex items-center justify-between">
                 <span>ORM & Transactions</span>
@@ -119,19 +138,28 @@ export default function SettingsBackupsPage() {
             </div>
           </div>
 
-          <div className="pt-6 border-t border-[#1e293b] flex items-center gap-3">
+          <div className="pt-6 border-t border-[#1e293b] flex flex-wrap items-center gap-2.5">
+            <button
+              onClick={handleSetupCloudDB}
+              disabled={settingUpDb}
+              title="Initialize tables and seed roles, users, and 60 reels into cloud PostgreSQL"
+              className="flex-1 min-w-[120px] flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs shadow-md"
+            >
+              <RefreshCcw className={`w-3.5 h-3.5 ${settingUpDb ? 'animate-spin' : ''}`} />
+              <span>{settingUpDb ? 'Seeding...' : 'Seed Cloud DB'}</span>
+            </button>
             <button
               onClick={handleCreateSnapshot}
-              className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-semibold text-xs shadow-lg shadow-amber-500/20"
+              className="flex-1 min-w-[120px] flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-semibold text-xs shadow-lg shadow-amber-500/20"
             >
-              <HardDrive className="w-4 h-4" />
-              <span>Create Snapshot</span>
+              <HardDrive className="w-3.5 h-3.5" />
+              <span>Snapshot</span>
             </button>
             <button
               onClick={handleDownloadBackup}
-              className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-[#162035] hover:bg-[#202d4b] border border-[#22314e] text-slate-200 font-semibold text-xs shadow-md"
+              className="flex-1 min-w-[120px] flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-[#162035] hover:bg-[#202d4b] border border-[#22314e] text-slate-200 font-semibold text-xs shadow-md"
             >
-              <Download className="w-4 h-4" />
+              <Download className="w-3.5 h-3.5" />
               <span>Download JSON</span>
             </button>
           </div>

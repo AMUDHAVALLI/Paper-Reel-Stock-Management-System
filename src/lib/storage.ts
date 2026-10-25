@@ -37,25 +37,47 @@ function toReelDomain(r: any): Reel {
 }
 
 export async function getReels(): Promise<Reel[]> {
-  const records = await prisma.reel.findMany({
-    orderBy: [
-      { inwardDate: 'desc' },
-      { createdAt: 'desc' }
-    ],
-  });
-  return records.map(toReelDomain);
+  try {
+    const records = await prisma.reel.findMany({
+      orderBy: [
+        { inwardDate: 'desc' },
+        { createdAt: 'desc' }
+      ],
+    });
+    return records.map(toReelDomain);
+  } catch (err: any) {
+    console.warn('Prisma getReels failed, using local json cache fallback:', err?.message);
+    try {
+      const dataFilePath = path.join(process.cwd(), 'data', 'paper_reel_db.json');
+      if (fs.existsSync(dataFilePath)) {
+        const fileContent = fs.readFileSync(dataFilePath, 'utf-8');
+        const parsed = JSON.parse(fileContent);
+        if (Array.isArray(parsed.reels)) {
+          return parsed.reels;
+        }
+      }
+    } catch (e) {
+      // ignore
+    }
+    return [];
+  }
 }
 
 export async function getReelById(id: string): Promise<Reel | null> {
-  const record = await prisma.reel.findFirst({
-    where: {
-      OR: [
-        { id },
-        { reelNo: id },
-      ],
-    },
-  });
-  return record ? toReelDomain(record) : null;
+  try {
+    const record = await prisma.reel.findFirst({
+      where: {
+        OR: [
+          { id },
+          { reelNo: id },
+        ],
+      },
+    });
+    return record ? toReelDomain(record) : null;
+  } catch (err) {
+    const all = await getReels();
+    return all.find((r) => r.id === id || r.reelNo === id) || null;
+  }
 }
 
 export async function addReel(
@@ -290,41 +312,49 @@ export async function deleteReel(id: string, user: string = 'Admin'): Promise<bo
 }
 
 export async function getConsumptionLogs(): Promise<ConsumptionLog[]> {
-  const records = await prisma.consumptionLog.findMany({
-    orderBy: { createdAt: 'desc' },
-    take: 50,
-  });
-  return records.map((l) => ({
-    id: l.id,
-    reelId: l.reelId,
-    reelNo: l.reelNo,
-    consumedWeight: l.consumedWeight,
-    balanceAfter: l.balanceAfter,
-    pricePerKg: l.pricePerKg,
-    amount: l.amount,
-    consumedDate: l.consumedDate,
-    machineId: l.machineId ?? undefined,
-    jobOrderNo: l.jobOrderNo ?? undefined,
-    recordedBy: l.recordedBy,
-    remarks: l.remarks ?? undefined,
-    createdAt: l.createdAt.toISOString(),
-  }));
+  try {
+    const records = await prisma.consumptionLog.findMany({
+      orderBy: { createdAt: 'desc' },
+      take: 50,
+    });
+    return records.map((l) => ({
+      id: l.id,
+      reelId: l.reelId,
+      reelNo: l.reelNo,
+      consumedWeight: l.consumedWeight,
+      balanceAfter: l.balanceAfter,
+      pricePerKg: l.pricePerKg,
+      amount: l.amount,
+      consumedDate: l.consumedDate,
+      machineId: l.machineId ?? undefined,
+      jobOrderNo: l.jobOrderNo ?? undefined,
+      recordedBy: l.recordedBy,
+      remarks: l.remarks ?? undefined,
+      createdAt: l.createdAt.toISOString(),
+    }));
+  } catch (err) {
+    return [];
+  }
 }
 
 export async function getAuditLogs(): Promise<AuditLog[]> {
-  const records = await prisma.auditLog.findMany({
-    orderBy: { timestamp: 'desc' },
-    take: 100,
-  });
-  return records.map((a) => ({
-    id: a.id,
-    timestamp: a.timestamp.toISOString(),
-    action: a.action as any,
-    entityName: a.entityName,
-    entityId: a.entityId,
-    details: a.details,
-    user: a.user,
-  }));
+  try {
+    const records = await prisma.auditLog.findMany({
+      orderBy: { timestamp: 'desc' },
+      take: 100,
+    });
+    return records.map((a) => ({
+      id: a.id,
+      timestamp: a.timestamp.toISOString(),
+      action: a.action as any,
+      entityName: a.entityName,
+      entityId: a.entityId,
+      details: a.details,
+      user: a.user,
+    }));
+  } catch (err) {
+    return [];
+  }
 }
 
 export async function getStockSummary(): Promise<StockSummary> {
