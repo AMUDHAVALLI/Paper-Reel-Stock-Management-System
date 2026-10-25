@@ -1,0 +1,11 @@
+{
+  "/login/page": "app/login/page.js",
+  "/api/admin/roles/route": "app/api/admin/roles/route.js",
+  "/api/auth/me/route": "app/api/auth/me/route.js",
+  "/admin/page": "app/admin/page.js",
+  "/consumption/page": "app/consumption/page.js",
+  "/reports/page": "app/reports/page.js",
+  "/api/stats/route": "app/api/stats/route.js",
+  "/page": "app/page.js",
+  "/api/reels/route": "app/api/reels/route.js"
+}

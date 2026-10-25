@@ -1,0 +1,110 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Reel {
+  id             String           @id @default(cuid())
+  reelNo         String           @unique
+  itemType       String           @default("KRAFT_REEL")
+  category       String
+  sizeDesc       String
+  sizeValue      Float?
+  sizeUnit       String           @default("CM")
+  gsm            Int
+  bf             Int?
+  weight         Float
+  usedWeight     Float            @default(0)
+  balanceWeight  Float
+  pricePerKg     Float            @default(0)
+  reelAmount     Float            @default(0)
+  consumedAmount Float            @default(0)
+  balanceAmount  Float            @default(0)
+  millName       String
+  bayLocation    String?
+  status         String           @default("IN_STOCK") // IN_STOCK, PARTIAL, EXHAUSTED
+  inwardDate     String
+  usedDate       String?
+  financialYear  String           @default("2026-2027")
+  isSheet        Boolean          @default(false)
+  sheetCount     Int?
+  remarks        String?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  consumption    ConsumptionLog[]
+}
+
+model ConsumptionLog {
+  id             String   @id @default(cuid())
+  reelId         String
+  reel           Reel     @relation(fields: [reelId], references: [id], onDelete: Cascade)
+  reelNo         String
+  consumedWeight Float
+  balanceAfter   Float
+  pricePerKg     Float    @default(0)
+  amount         Float    @default(0)
+  consumedDate   String
+  machineId      String?
+  jobOrderNo     String?
+  recordedBy     String   @default("Operator")
+  remarks        String?
+  createdAt      DateTime @default(now())
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  timestamp  DateTime @default(now())
+  action     String   // INWARD, CONSUME, UPDATE, DELETE, IMPORT, RESTORE
+  entityName String
+  entityId   String
+  details    String
+  user       String   @default("Admin")
+  oldValues  String?
+  newValues  String?
+}
+
+model Setting {
+  id                  String @id @default("default")
+  companyName         String @default("OM NAMASIVAYAM PACKAGING")
+  financialYear       String @default("2026-2027")
+  currencySymbol      String @default("₹")
+  lowStockThresholdKg Float  @default(1000)
+}
+
+model Role {
+  id                String   @id @default(cuid())
+  name              String   @unique // e.g. "ADMIN", "ACCOUNTANT", "STOREKEEPER", "OPERATOR", or custom roles
+  displayName       String
+  description       String?
+  isSystem          Boolean  @default(false) // System roles cannot be deleted
+  canViewDashboard  Boolean  @default(true)
+  canViewRegister   Boolean  @default(true)
+  canViewPrices     Boolean  @default(false) // Sensitive price masking
+  canInwardReels    Boolean  @default(false)
+  canIssueReels     Boolean  @default(false)
+  canViewSheets     Boolean  @default(true)
+  canPrintLabels    Boolean  @default(false)
+  canViewReports    Boolean  @default(false)
+  canManageSettings Boolean  @default(false)
+  canDeleteReels    Boolean  @default(false)
+  canAccessAdmin    Boolean  @default(false)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  users             User[]
+}
+
+model User {
+  id           String   @id @default(cuid())
+  username     String   @unique
+  passwordHash String
+  fullName     String
+  roleName     String   @default("OPERATOR")
+  role         Role     @relation(fields: [roleName], references: [name], onDelete: Restrict)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
