@@ -83,14 +83,14 @@ export async function POST(request: Request) {
         action: 'IMPORT',
         entityName: 'EXCEL_SHEET',
         entityId: file.name,
-        details: `Imported spreadsheet ${file.name} to SQLite DB: ${inserted} inserted, ${updated} updated (Mode: ${mode})`,
+        details: `Imported spreadsheet ${file.name} to PostgreSQL DB: ${inserted} inserted, ${updated} updated (Mode: ${mode})`,
         user,
       },
     });
 
     return NextResponse.json({
       success: true,
-      message: `Successfully imported into SQLite DB: ${inserted} new reels added, ${updated} updated`,
+      message: `Successfully imported into PostgreSQL DB: ${inserted} new reels added, ${updated} updated`,
       data: {
         totalParsed: parsed.totalParsed,
         totalWeight: parsed.totalWeight,

@@ -188,7 +188,7 @@ export async function updateReel(
       action: 'UPDATE',
       entityName: 'REEL',
       entityId: updated.reelNo,
-      details: `Updated reel #${updated.reelNo} in SQLite database`,
+      details: `Updated reel #${updated.reelNo} in PostgreSQL database`,
       user,
       oldValues: JSON.stringify(existing),
       newValues: JSON.stringify(updated),
@@ -303,7 +303,7 @@ export async function deleteReel(id: string, user: string = 'Admin'): Promise<bo
       action: 'DELETE',
       entityName: 'REEL',
       entityId: reel.reelNo,
-      details: `Deleted reel #${reel.reelNo} from SQLite database`,
+      details: `Deleted reel #${reel.reelNo} from PostgreSQL database`,
       user,
     },
   });

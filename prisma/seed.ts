@@ -227,9 +227,9 @@ async function main() {
   await prisma.auditLog.create({
     data: {
       action: 'IMPORT',
-      entityName: 'SQLITE_DATABASE',
+      entityName: 'POSTGRESQL_DATABASE',
       entityId: 'REELS STOCK 26-27 NEW.xlsx',
-      details: `Imported ${insertedCount} new reels and updated ${updatedCount} reels into SQLite database (prisma/dev.db)`,
+      details: `Imported ${insertedCount} new reels and updated ${updatedCount} reels into PostgreSQL database`,
       user: 'System Admin',
     },
   });
@@ -245,8 +245,8 @@ async function main() {
     },
   });
 
-  console.log(`\n SQLite Database Seed Complete:`);
-  console.log(` - Total Reels in SQLite DB: ${totalInDb}`);
+  console.log(`\n PostgreSQL Database Seed Complete:`);
+  console.log(` - Total Reels in PostgreSQL DB: ${totalInDb}`);
   console.log(` - Total Weight: ${balanceAgg._sum.weight} KG`);
   console.log(` - Consumed Weight: ${balanceAgg._sum.usedWeight} KG`);
   console.log(` - Available Balance Weight: ${balanceAgg._sum.balanceWeight} KG`);

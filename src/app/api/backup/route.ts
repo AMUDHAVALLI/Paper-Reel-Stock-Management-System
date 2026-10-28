@@ -3,47 +3,36 @@ import { prisma } from '@/lib/prisma';
 import fs from 'fs';
 import path from 'path';
 
-export async function GET(request: Request) {
+export async function GET() {
   try {
-    const { searchParams } = new URL(request.url);
-    const type = searchParams.get('type');
-
-    if (type === 'sqlite') {
-      const dbPath = path.join(process.cwd(), 'prisma', 'dev.db');
-      if (!fs.existsSync(dbPath)) {
-        return NextResponse.json({ success: false, error: 'Database file not found' }, { status: 404 });
-      }
-      const fileBuffer = fs.readFileSync(dbPath);
-      return new NextResponse(fileBuffer, {
-        headers: {
-          'Content-Type': 'application/x-sqlite3',
-          'Content-Disposition': `attachment; filename="paper_reel_stock_${new Date().toISOString().split('T')[0]}.db"`,
-        },
-      });
-    }
-
-    // Default JSON database dump
-    const [reels, consumptionLogs, auditLogs, setting] = await Promise.all([
-      prisma.reel.findMany(),
-      prisma.consumptionLog.findMany(),
-      prisma.auditLog.findMany(),
+    // Comprehensive JSON PostgreSQL database export
+    const [reels, consumptionLogs, auditLogs, setting, roles, users] = await Promise.all([
+      prisma.reel.findMany({ orderBy: { createdAt: 'desc' } }),
+      prisma.consumptionLog.findMany({ orderBy: { createdAt: 'desc' } }),
+      prisma.auditLog.findMany({ orderBy: { timestamp: 'desc' } }),
       prisma.setting.findFirst(),
+      prisma.role.findMany(),
+      prisma.user.findMany({ select: { id: true, username: true, fullName: true, roleName: true, isActive: true, createdAt: true } }),
     ]);
 
     const backupPayload = {
       exportDate: new Date().toISOString(),
-      databaseEngine: 'SQLite / Prisma',
+      databaseEngine: 'PostgreSQL / Prisma',
       setting,
+      roles,
+      users,
       reels,
       consumptionLogs,
       auditLogs,
     };
 
+    const dateStr = new Date().toISOString().split('T')[0];
+
     return new NextResponse(JSON.stringify(backupPayload, null, 2), {
       status: 200,
       headers: {
         'Content-Type': 'application/json',
-        'Content-Disposition': `attachment; filename="paper_reel_sqlite_dump_${new Date().toISOString().split('T')[0]}.json"`,
+        'Content-Disposition': `attachment; filename="paper_reel_postgres_backup_${dateStr}.json"`,
       },
     });
   } catch (error: any) {
@@ -61,25 +50,43 @@ export async function POST(request: Request) {
       }
 
       const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-      const backupDbPath = path.join(backupDir, `dev_snapshot_${timestamp}.db`);
-      const srcDbPath = path.join(process.cwd(), 'prisma', 'dev.db');
+      const backupFilePath = path.join(backupDir, `postgres_snapshot_${timestamp}.json`);
 
-      fs.copyFileSync(srcDbPath, backupDbPath);
+      // Fetch all database records
+      const [reels, consumptionLogs, auditLogs, setting, roles] = await Promise.all([
+        prisma.reel.findMany(),
+        prisma.consumptionLog.findMany(),
+        prisma.auditLog.findMany(),
+        prisma.setting.findFirst(),
+        prisma.role.findMany(),
+      ]);
+
+      const snapshotData = {
+        snapshotDate: new Date().toISOString(),
+        databaseEngine: 'PostgreSQL',
+        setting,
+        roles,
+        reels,
+        consumptionLogs,
+        auditLogs,
+      };
+
+      fs.writeFileSync(backupFilePath, JSON.stringify(snapshotData, null, 2), 'utf-8');
 
       await prisma.auditLog.create({
         data: {
           action: 'RESTORE',
-          entityName: 'SQLITE_DATABASE',
-          entityId: `dev_snapshot_${timestamp}.db`,
-          details: `Created snapshot copy of SQLite database: dev_snapshot_${timestamp}.db`,
+          entityName: 'POSTGRESQL_DATABASE',
+          entityId: `postgres_snapshot_${timestamp}.json`,
+          details: `Created snapshot copy of PostgreSQL database: postgres_snapshot_${timestamp}.json`,
           user: body.user || 'Admin',
         },
       });
 
       return NextResponse.json({
         success: true,
-        message: 'SQLite database snapshot saved successfully to data/backups/',
-        path: backupDbPath,
+        message: 'PostgreSQL database snapshot saved successfully to data/backups/',
+        path: backupFilePath,
       });
     }
 
