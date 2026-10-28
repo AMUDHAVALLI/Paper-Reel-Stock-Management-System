@@ -12,13 +12,10 @@ import {
   BarChart3,
   Settings,
   ShieldCheck,
-  UserCheck,
   Box,
   Lock,
-  LogIn,
 } from 'lucide-react';
 import { UserRole } from '@/lib/types';
-import { ROLE_PERMISSIONS } from '@/lib/auth';
 import { useApp } from './AppShell';
 
 interface SidebarProps {
@@ -27,31 +24,9 @@ interface SidebarProps {
   activeCount?: number;
 }
 
-export default function Sidebar({ currentRole, onRoleChange, activeCount }: SidebarProps) {
+export default function Sidebar({ currentRole, activeCount }: SidebarProps) {
   const pathname = usePathname();
   const { permissions } = useApp();
-  const [availableRoles, setAvailableRoles] = React.useState<Array<{ name: string; displayName: string }>>([
-    { name: 'ADMIN', displayName: 'ADMIN (Full Access & Rates)' },
-    { name: 'ACCOUNTANT', displayName: 'ACCOUNTANT (Valuations & Audit)' },
-    { name: 'STOREKEEPER', displayName: 'STOREKEEPER (Inward & QR)' },
-    { name: 'OPERATOR', displayName: 'OPERATOR (Machine Issue)' },
-  ]);
-
-  React.useEffect(() => {
-    fetch('/api/admin/roles')
-      .then((r) => r.json())
-      .then((d) => {
-        if (d.success && d.roles) {
-          setAvailableRoles(
-            d.roles.map((r: any) => ({
-              name: r.name,
-              displayName: `${r.displayName} (${r.name})`,
-            }))
-          );
-        }
-      })
-      .catch(() => {});
-  }, [currentRole]);
 
   const navItems = [
     {
@@ -193,39 +168,13 @@ export default function Sidebar({ currentRole, onRoleChange, activeCount }: Side
         </nav>
       </div>
 
-      {/* Role Switcher & Security Footer */}
-      <div className="p-4 border-t border-[#1e293b] bg-[#0b0e17] space-y-2.5">
-        <div className="flex items-center justify-between">
-          <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-            <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
-            Active Role
-          </span>
-          <Link
-            href="/login"
-            className="text-[10px] text-amber-400 hover:underline flex items-center gap-1"
-          >
-            <LogIn className="w-3 h-3" />
-            <span>Login Page</span>
-          </Link>
-        </div>
-
-        <select
-          value={currentRole}
-          onChange={(e) => onRoleChange(e.target.value as UserRole)}
-          className="w-full bg-[#141b2d] border border-[#24314c] text-xs text-amber-300 font-bold rounded-lg px-2.5 py-2 outline-none focus:border-amber-500 cursor-pointer transition-colors"
-        >
-          {availableRoles.map((r) => (
-            <option key={r.name} value={r.name}>
-              {r.displayName}
-            </option>
-          ))}
-        </select>
-
-        <p className="text-[10px] text-slate-400 text-center flex items-center justify-center gap-1">
-          <UserCheck className="w-3 h-3 text-emerald-400 shrink-0" />
-          <span className="truncate">
-            {permissions.canViewPrices ? 'Prices (₹) Visible' : 'Prices (₹) Masked & Hidden'}
-          </span>
+      {/* Footer Branding (Active role switcher hidden) */}
+      <div className="p-4 border-t border-[#1e293b] bg-[#0b0e17]/70 text-center">
+        <p className="text-[11px] font-semibold text-slate-400 tracking-wider uppercase">
+          OM NAMASIVAYAM PACKAGING
+        </p>
+        <p className="text-[10px] text-slate-500 font-mono mt-0.5">
+          Enterprise ERP System
         </p>
       </div>
     </aside>
