@@ -27,13 +27,10 @@ export async function POST(request: Request) {
       dbError = true;
     }
 
-    // If database was unreachable on Vercel, allow demo/factory accounts to log in
+    // If database was unreachable on Vercel, allow admin fallback account to log in
     if (dbError || !user) {
       const fallbackAccounts: Record<string, { pass: string; fullName: string; role: string }> = {
         admin: { pass: 'admin123', fullName: 'Sivakumar (Factory Admin)', role: 'ADMIN' },
-        accountant: { pass: 'account123', fullName: 'Ramesh (Chief Accountant)', role: 'ACCOUNTANT' },
-        store: { pass: 'store123', fullName: 'Murugan (Store Incharge)', role: 'STOREKEEPER' },
-        operator: { pass: 'operator123', fullName: 'Senthil (Line Operator)', role: 'OPERATOR' },
       };
 
       const cleanUser = username.toLowerCase().trim();
@@ -76,6 +73,13 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { success: false, error: 'Invalid username or user is disabled' },
         { status: 401 }
+      );
+    }
+
+    if (user.roleName !== 'ADMIN') {
+      return NextResponse.json(
+        { success: false, error: 'Access restricted: Only Administrator accounts can sign in.' },
+        { status: 403 }
       );
     }
 
