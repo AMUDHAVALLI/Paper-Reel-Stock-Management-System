@@ -162,8 +162,6 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     accessDeniedMessage = `The role '${currentRole}' does not have permission to inward new reels. Only Admin and Storekeeper can receive paper rolls from mills.`;
   } else if (pathname === '/reports' && !permissions.canViewReports) {
     accessDeniedMessage = `The role '${currentRole}' does not have permission to view closing stock valuations and financial statements. Only Admin and Accountant have financial reporting clearance.`;
-  } else if (pathname === '/settings' && !permissions.canManageSettings) {
-    accessDeniedMessage = `The role '${currentRole}' does not have permission to modify database configurations or database snapshots. Only Admin has system configuration access.`;
   }
 
   return (
@@ -183,7 +181,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         logout,
       }}
     >
-      <div className="flex min-h-screen bg-[#0a0d14] text-slate-100">
+      <div className="flex min-h-screen bg-slate-50 text-slate-800">
         <Sidebar
           currentRole={currentRole}
           onRoleChange={handleRoleChange}
@@ -197,27 +195,27 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           />
           <main className="flex-1 p-6 overflow-y-auto">
             {accessDeniedMessage ? (
-              <div className="max-w-2xl mx-auto mt-12 bg-[#111726] border border-rose-500/30 rounded-3xl p-8 text-center shadow-2xl space-y-4">
-                <div className="w-16 h-16 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-400 flex items-center justify-center mx-auto">
+              <div className="max-w-2xl mx-auto mt-12 bg-white border border-rose-300 rounded-3xl p-8 text-center shadow-lg space-y-4 theme-card">
+                <div className="w-16 h-16 rounded-2xl bg-rose-50 border border-rose-200 text-rose-600 flex items-center justify-center mx-auto">
                   <Lock className="w-8 h-8" />
                 </div>
-                <h3 className="text-xl font-bold text-white tracking-tight">
+                <h3 className="text-xl font-heading font-bold text-slate-900 tracking-tight">
                   Access Restricted for Role: {currentRole}
                 </h3>
-                <p className="text-xs text-slate-300 leading-relaxed max-w-lg mx-auto">
+                <p className="text-xs text-slate-600 leading-relaxed max-w-lg mx-auto">
                   {accessDeniedMessage}
                 </p>
                 <div className="pt-4 flex items-center justify-center gap-3">
                   <Link
                     href="/"
-                    className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#162035] hover:bg-[#1e2a44] border border-[#23314e] text-xs font-semibold text-slate-200"
+                    className="btn-theme-secondary flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-heading font-bold text-slate-700"
                   >
                     <ArrowLeft className="w-4 h-4" />
                     <span>Back to Dashboard</span>
                   </Link>
                   <Link
                     href="/login"
-                    className="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold shadow-lg shadow-amber-500/20"
+                    className="btn-theme-primary px-5 py-2.5 rounded-xl text-white text-xs font-heading font-bold shadow-md shadow-amber-500/20"
                   >
                     Switch Account / Role
                   </Link>

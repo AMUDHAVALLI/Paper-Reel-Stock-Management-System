@@ -1,5 +1,6 @@
 import { prisma } from './prisma';
 import { Reel, ConsumptionLog, AuditLog, StockSummary } from './types';
+import { sendLowStockAlert } from './email';
 import fs from 'fs';
 import path from 'path';
 
@@ -206,7 +207,11 @@ export async function consumeReel(params: {
   remarks?: string;
   user?: string;
   consumedDate?: string;
-}): Promise<{ reel: Reel; log: ConsumptionLog }> {
+}): Promise<{
+  reel: Reel;
+  log: ConsumptionLog;
+  emailAlert?: { triggered: boolean; sent: boolean; recipient: string; percentage: number };
+}> {
   const reel = await prisma.reel.findFirst({
     where: { OR: [{ id: params.reelId }, { reelNo: params.reelId }] },
   });
@@ -268,6 +273,39 @@ export async function consumeReel(params: {
     }),
   ]);
 
+  // Check if Balance Weight reaches 20% (or less)
+  const balancePercentage = reel.weight > 0 ? Number(((newBalanceWeight / reel.weight) * 100).toFixed(1)) : 0;
+  let emailAlert: { triggered: boolean; sent: boolean; recipient: string; percentage: number } | undefined = undefined;
+
+  if (balancePercentage <= 20) {
+    try {
+      const emailRes = await sendLowStockAlert({
+        reelNo: reel.reelNo,
+        millName: reel.millName,
+        sizeDesc: reel.sizeDesc,
+        gsm: reel.gsm,
+        bf: reel.bf,
+        weight: reel.weight,
+        consumedWeight: newUsedWeight,
+        balanceWeight: newBalanceWeight,
+        balancePercentage,
+        machineId: params.machineId,
+        jobOrderNo: params.jobOrderNo,
+        user: params.user,
+        date: consumedDate,
+      });
+
+      emailAlert = {
+        triggered: true,
+        sent: emailRes.sent || emailRes.simulated,
+        recipient: emailRes.recipient,
+        percentage: balancePercentage,
+      };
+    } catch (emailErr) {
+      console.error('Failed to trigger low stock alert email:', emailErr);
+    }
+  }
+
   return {
     reel: toReelDomain(updatedReel),
     log: {
@@ -285,6 +323,7 @@ export async function consumeReel(params: {
       remarks: log.remarks ?? undefined,
       createdAt: log.createdAt.toISOString(),
     },
+    emailAlert,
   };
 }
 

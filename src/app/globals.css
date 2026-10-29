@@ -1,65 +1,131 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Nunito+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --bg-primary: #0a0d14;
-  --bg-secondary: #111726;
-  --bg-tertiary: #192238;
-  --border-subtle: #1e293b;
-  --border-hover: #334155;
-  --accent-kraft: #d97706;
-  --accent-kraft-glow: rgba(217, 119, 6, 0.15);
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
+  --color-primary: #d97706;
+  --color-primary-hover: #b45309;
+  --color-primary-contrast: #ffffff;
+  --color-accent: #f59e0b;
+  --color-glow: rgba(217, 119, 6, 0.18);
+  --color-bg-base: #f8fafc;
+  --color-bg-surface: #ffffff;
+  --color-bg-card: #ffffff;
+  --color-bg-card-hover: #fcfbf9;
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-muted: #94a3b8;
+  --color-border: #e2e8f0;
+  --color-border-hover: rgba(217, 119, 6, 0.45);
+  --card-radius: 1rem;
+  --header-bg: rgba(255, 255, 255, 0.9);
+  --font-poppins: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-nunito-sans: 'Nunito Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 }
 
 body {
-  font-family: 'Outfit', sans-serif;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+  font-family: var(--font-nunito-sans);
+  background-color: var(--color-bg-base);
+  color: var(--color-text-primary);
   overflow-x: hidden;
   min-height: 100vh;
 }
 
-code, pre, .font-mono {
-  font-family: 'JetBrains Mono', monospace;
+h1, h2, h3, h4, h5, h6, .font-heading {
+  font-family: var(--font-poppins);
+  letter-spacing: -0.02em;
 }
 
-/* Custom Scrollbar */
+code, pre, .font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Custom Scrollbar styled matching onpackaging */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #0b0f17;
+  background: #f1f5f9;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
+  background: #cbd5e1;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: #d97706;
 }
 
-/* Glassmorphic card utility */
-.glass-panel {
-  background: rgba(17, 23, 38, 0.85);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+/* onpackaging.in Theme Cards & Panels */
+.theme-card {
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--card-radius);
+  box-shadow: 0 2px 12px -2px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.glass-panel-hover {
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.glass-panel-hover:hover {
-  border-color: rgba(217, 119, 6, 0.4);
+.theme-card:hover {
+  border-color: var(--color-border-hover);
+  box-shadow: 0 10px 25px -5px var(--color-glow);
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px -5px rgba(217, 119, 6, 0.12);
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+}
+
+.theme-cardboard-pattern {
+  background-image: radial-gradient(rgba(217, 119, 6, 0.08) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* onpackaging.in Buttons */
+.btn-theme-primary {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  font-family: var(--font-poppins);
+  font-weight: 700;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 14px 0 rgba(217, 119, 6, 0.25);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-theme-primary:hover {
+  background-color: var(--color-primary-hover);
+  box-shadow: 0 10px 25px -5px rgba(217, 119, 6, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-theme-secondary {
+  background-color: #ffffff;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+  font-family: var(--font-poppins);
+  font-weight: 600;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-theme-secondary:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background-color: rgba(217, 119, 6, 0.06);
+}
+
+/* onpackaging.in Badge Pill */
+.badge-pill-brand {
+  background-color: rgba(217, 119, 6, 0.12);
+  border: 1px solid rgba(217, 119, 6, 0.35);
+  color: #b45309;
 }
 
 /* Print Styles for QR Code Labels and Reports */

@@ -22,34 +22,34 @@ export default function KPICard({
 }: KPICardProps) {
   const colorMap = {
     amber: {
-      border: 'border-amber-500/20 hover:border-amber-500/50',
+      border: 'border-amber-200 hover:border-amber-400',
       bgGlow: 'from-amber-500/10 to-transparent',
-      iconBg: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
-      valueColor: 'text-amber-400',
+      iconBg: 'bg-amber-50 text-amber-600 border-amber-200',
+      valueColor: 'text-amber-600',
     },
     emerald: {
-      border: 'border-emerald-500/20 hover:border-emerald-500/50',
+      border: 'border-emerald-200 hover:border-emerald-400',
       bgGlow: 'from-emerald-500/10 to-transparent',
-      iconBg: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
-      valueColor: 'text-emerald-400',
+      iconBg: 'bg-emerald-50 text-emerald-600 border-emerald-200',
+      valueColor: 'text-emerald-600',
     },
     blue: {
-      border: 'border-blue-500/20 hover:border-blue-500/50',
+      border: 'border-blue-200 hover:border-blue-400',
       bgGlow: 'from-blue-500/10 to-transparent',
-      iconBg: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
-      valueColor: 'text-blue-400',
+      iconBg: 'bg-blue-50 text-blue-600 border-blue-200',
+      valueColor: 'text-blue-600',
     },
     purple: {
-      border: 'border-purple-500/20 hover:border-purple-500/50',
+      border: 'border-purple-200 hover:border-purple-400',
       bgGlow: 'from-purple-500/10 to-transparent',
-      iconBg: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
-      valueColor: 'text-purple-400',
+      iconBg: 'bg-purple-50 text-purple-600 border-purple-200',
+      valueColor: 'text-purple-600',
     },
     rose: {
-      border: 'border-rose-500/20 hover:border-rose-500/50',
+      border: 'border-rose-200 hover:border-rose-400',
       bgGlow: 'from-rose-500/10 to-transparent',
-      iconBg: 'bg-rose-500/10 text-rose-400 border-rose-500/20',
-      valueColor: 'text-rose-400',
+      iconBg: 'bg-rose-50 text-rose-600 border-rose-200',
+      valueColor: 'text-rose-600',
     },
   };
 
@@ -57,32 +57,32 @@ export default function KPICard({
 
   return (
     <div
-      className={`relative overflow-hidden rounded-2xl bg-[#111726]/90 border ${scheme.border} p-5 transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5`}
+      className={`relative overflow-hidden rounded-2xl theme-card bg-white border ${scheme.border} p-5 transition-all duration-300 hover:shadow-xl hover:-translate-y-1`}
     >
       <div className={`absolute -right-6 -bottom-6 w-32 h-32 bg-gradient-to-br ${scheme.bgGlow} rounded-full blur-2xl pointer-events-none`} />
 
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">{title}</p>
-          <h3 className="mt-2 text-2xl font-bold tracking-tight text-white font-mono">
+          <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wider font-heading">{title}</p>
+          <h3 className={`mt-2 text-2xl font-black tracking-tight font-heading ${scheme.valueColor}`}>
             {value}
           </h3>
           {subtitle && (
-            <p className="mt-1 text-xs text-slate-400">
+            <p className="mt-1 text-xs text-slate-500 font-medium">
               {subtitle}
             </p>
           )}
         </div>
-        <div className={`p-3 rounded-xl border ${scheme.iconBg}`}>
+        <div className={`p-3 rounded-xl border ${scheme.iconBg} shadow-sm`}>
           <Icon className="w-5 h-5" />
         </div>
       </div>
 
       {trend && (
-        <div className="mt-4 pt-3 border-t border-[#1e293b]/60 flex items-center gap-1.5 text-xs">
+        <div className="mt-4 pt-3 border-t border-slate-200 flex items-center gap-1.5 text-xs">
           <span
-            className={`font-semibold ${
-              trendPositive ? 'text-emerald-400' : 'text-slate-400'
+            className={`font-bold ${
+              trendPositive ? 'text-emerald-600' : 'text-slate-500'
             }`}
           >
             {trend}

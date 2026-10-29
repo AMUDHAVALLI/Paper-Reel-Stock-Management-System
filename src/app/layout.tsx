@@ -1,10 +1,14 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import AppShell from '@/components/AppShell';
 
 export const metadata: Metadata = {
-  title: 'Paper Reel Stock Management | Om Namasivayam Packaging',
-  description: 'Industrial Paper Reel Stock & Inventory Management ERP for Corrugated Box Packaging. Track Kraft Reels, GSM, Deckle Sizes, Burst Factor, Partial Consumption and Stock Valuations.',
+  title: 'OM Namasivayam Packaging | Paper Reel Stock Management ERP',
+  description: 'Enterprise Corrugated Box & Paper Reel Inventory Management ERP. Puducherry Plant Capacity: 70–90 Tonnes/Month.',
+};
+
+export const viewport: Viewport = {
+  themeColor: '#f8fafc',
 };
 
 export default function RootLayout({
@@ -13,10 +17,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
-      <body className="bg-[#0a0d14] text-slate-100 antialiased selection:bg-amber-500/30 selection:text-amber-300">
+    <html lang="en" className="light scroll-smooth">
+      <body className="bg-slate-50 text-slate-800 antialiased selection:bg-amber-500/20 selection:text-amber-800">
         <AppShell>{children}</AppShell>
       </body>
     </html>
   );
 }
+

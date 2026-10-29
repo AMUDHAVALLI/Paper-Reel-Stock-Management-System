@@ -352,20 +352,20 @@ export default function AdminPage() {
 
   if (!isAuthorized) {
     return (
-      <div className="max-w-2xl mx-auto mt-16 bg-[#111726] border border-rose-500/30 rounded-3xl p-10 text-center shadow-2xl space-y-5">
-        <div className="w-20 h-20 rounded-3xl bg-rose-500/10 border border-rose-500/20 text-rose-400 flex items-center justify-center mx-auto shadow-inner">
+      <div className="max-w-2xl mx-auto mt-16 bg-white border border-rose-300 rounded-3xl p-10 text-center shadow-lg space-y-5">
+        <div className="w-20 h-20 rounded-3xl bg-rose-50 border border-rose-200 text-rose-600 flex items-center justify-center mx-auto shadow-xs">
           <Lock className="w-10 h-10" />
         </div>
-        <h2 className="text-2xl font-bold text-white tracking-tight">
+        <h2 className="text-2xl font-bold text-slate-900 tracking-tight font-heading">
           Admin Portal Restricted
         </h2>
-        <p className="text-sm text-slate-300 leading-relaxed max-w-lg mx-auto">
+        <p className="text-sm text-slate-600 leading-relaxed max-w-lg mx-auto">
           The Admin Module is strictly isolated for system administrators. Your current active role is{' '}
-          <span className="font-bold text-amber-400">'{currentRole}'</span>, which does not hold administrative permissions.
+          <span className="font-bold text-amber-600">'{currentRole}'</span>, which does not hold administrative permissions.
         </p>
-        <div className="p-4 rounded-xl bg-[#162035] border border-[#23314e] text-xs text-slate-400 text-left space-y-1">
-          <p className="font-semibold text-slate-200">Security Rule:</p>
-          <p>• Only users with the <span className="text-amber-300 font-mono">ADMIN</span> role can create custom roles, toggle permissions, or manage factory user logins.</p>
+        <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600 text-left space-y-1">
+          <p className="font-semibold text-slate-800">Security Rule:</p>
+          <p>• Only users with the <span className="text-amber-600 font-mono">ADMIN</span> role can create custom roles, toggle permissions, or manage factory user logins.</p>
         </div>
       </div>
     );
@@ -376,41 +376,41 @@ export default function AdminPage() {
       {/* Toast Notification */}
       {message && (
         <div
-          className={`fixed top-5 right-5 z-50 flex items-center gap-3 px-5 py-3.5 rounded-2xl shadow-2xl border text-sm font-semibold transition-all duration-300 animate-in slide-in-from-top-4 ${
+          className={`fixed top-5 right-5 z-50 flex items-center gap-3 px-5 py-3.5 rounded-2xl shadow-xl border text-sm font-semibold transition-all duration-300 animate-in slide-in-from-top-4 ${
             message.type === 'success'
-              ? 'bg-emerald-950/90 border-emerald-500/40 text-emerald-200 shadow-emerald-900/30'
-              : 'bg-rose-950/90 border-rose-500/40 text-rose-200 shadow-rose-900/30'
+              ? 'bg-emerald-50 border-emerald-300 text-emerald-800 shadow-emerald-100'
+              : 'bg-rose-50 border-rose-300 text-rose-800 shadow-rose-100'
           }`}
         >
           {message.type === 'success' ? (
-            <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+            <CheckCircle2 className="w-5 h-5 text-emerald-600" />
           ) : (
-            <AlertTriangle className="w-5 h-5 text-rose-400" />
+            <AlertTriangle className="w-5 h-5 text-rose-600" />
           )}
           <span>{message.text}</span>
         </div>
       )}
 
       {/* Header Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#141c30] via-[#162444] to-[#12192b] border border-[#233252] p-6 shadow-2xl">
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-white border border-amber-300/40 p-6 shadow-xs">
         <div className="absolute top-0 right-0 -mt-8 -mr-8 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-500 to-amber-600 flex items-center justify-center text-white shadow-xl shadow-amber-500/25">
+            <div className="w-14 h-14 rounded-2xl bg-[#d97706] flex items-center justify-center text-white shadow-md shadow-amber-500/20">
               <ShieldCheck className="w-8 h-8" />
             </div>
             <div>
               <div className="flex items-center gap-2.5">
-                <h1 className="text-2xl font-bold text-white tracking-tight">Admin & RBAC Portal</h1>
-                <span className="text-[11px] font-semibold bg-amber-500/15 text-amber-400 px-2.5 py-0.5 rounded-full border border-amber-500/30">
+                <h1 className="text-2xl font-black text-slate-900 tracking-tight font-heading">Admin & RBAC Portal</h1>
+                <span className="text-[10px] font-bold bg-amber-100 text-amber-800 px-2.5 py-0.5 rounded-full border border-amber-200 font-heading">
                   Admin Only
                 </span>
-                <span className="text-[11px] font-mono bg-emerald-500/15 text-emerald-400 px-2.5 py-0.5 rounded-full border border-emerald-500/30">
+                <span className="text-[10px] font-mono bg-emerald-50 text-emerald-700 px-2.5 py-0.5 rounded-full border border-emerald-200 font-bold">
                   PostgreSQL 18
                 </span>
               </div>
-              <p className="text-xs text-slate-400 mt-1">
+              <p className="text-xs text-slate-500 mt-1 font-medium">
                 Maintain roles, custom permissions matrix, factory user accounts, and security audit logs in PostgreSQL.
               </p>
             </div>
@@ -420,15 +420,15 @@ export default function AdminPage() {
             <button
               onClick={fetchData}
               disabled={loading}
-              className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#1d2942] hover:bg-[#253556] text-xs font-semibold text-slate-300 border border-[#2c3d61] transition-all"
+              className="flex items-center gap-2 px-3.5 py-2 rounded-xl btn-theme-secondary text-xs font-semibold"
             >
-              <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
+              <RefreshCw className={`w-3.5 h-3.5 text-amber-600 ${loading ? 'animate-spin' : ''}`} />
               <span>Refresh</span>
             </button>
             {activeTab === 'roles' && (
               <button
                 onClick={() => setShowNewRoleModal(true)}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-xs font-bold text-white shadow-lg shadow-amber-500/25 transition-all"
+                className="flex items-center gap-2 px-4 py-2 rounded-xl btn-theme-primary text-xs font-bold"
               >
                 <Plus className="w-4 h-4" />
                 <span>Create Role</span>
@@ -437,7 +437,7 @@ export default function AdminPage() {
             {activeTab === 'users' && (
               <button
                 onClick={() => setShowNewUserModal(true)}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-xs font-bold text-white shadow-lg shadow-emerald-500/25 transition-all"
+                className="flex items-center gap-2 px-4 py-2 rounded-xl btn-theme-primary text-xs font-bold"
               >
                 <Plus className="w-4 h-4" />
                 <span>Add User</span>
@@ -447,18 +447,18 @@ export default function AdminPage() {
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex items-center gap-2 mt-6 border-t border-[#233252] pt-4">
+        <div className="flex items-center gap-2 mt-6 border-t border-slate-200 pt-4">
           <button
             onClick={() => setActiveTab('roles')}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
               activeTab === 'roles'
-                ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/25'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-[#1b263b]'
+                ? 'btn-theme-primary text-white shadow-xs'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
             }`}
           >
             <Sliders className="w-4 h-4" />
             <span>Roles & Permission Matrix</span>
-            <span className="text-[10px] bg-black/30 px-2 py-0.5 rounded-full ml-1 font-mono">
+            <span className="text-[10px] bg-black/10 px-2 py-0.5 rounded-full ml-1 font-mono">
               {roles.length}
             </span>
           </button>
@@ -467,13 +467,13 @@ export default function AdminPage() {
             onClick={() => setActiveTab('users')}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
               activeTab === 'users'
-                ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/25'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-[#1b263b]'
+                ? 'btn-theme-primary text-white shadow-xs'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
             }`}
           >
             <Users className="w-4 h-4" />
             <span>Factory User Accounts</span>
-            <span className="text-[10px] bg-black/30 px-2 py-0.5 rounded-full ml-1 font-mono">
+            <span className="text-[10px] bg-black/10 px-2 py-0.5 rounded-full ml-1 font-mono">
               {users.length}
             </span>
           </button>
@@ -482,13 +482,13 @@ export default function AdminPage() {
             onClick={() => setActiveTab('audit')}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
               activeTab === 'audit'
-                ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/25'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-[#1b263b]'
+                ? 'btn-theme-primary text-white shadow-xs'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
             }`}
           >
             <History className="w-4 h-4" />
             <span>Security Audit Log</span>
-            <span className="text-[10px] bg-black/30 px-2 py-0.5 rounded-full ml-1 font-mono">
+            <span className="text-[10px] bg-black/10 px-2 py-0.5 rounded-full ml-1 font-mono">
               {auditLogs.length}
             </span>
           </button>
@@ -500,61 +500,61 @@ export default function AdminPage() {
         <div className="space-y-6">
           {/* Summary Stat Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-[#12192b] border border-[#22304d] rounded-2xl p-4 flex items-center justify-between">
+            <div className="theme-card bg-white border border-slate-200 rounded-2xl p-4 flex items-center justify-between shadow-xs">
               <div>
-                <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Total Configured Roles</p>
-                <p className="text-2xl font-bold text-white mt-1">{roles.length}</p>
+                <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">Total Configured Roles</p>
+                <p className="text-2xl font-bold font-heading text-slate-900 mt-1">{roles.length}</p>
                 <p className="text-[11px] text-slate-500 mt-0.5">Stored dynamically in PostgreSQL</p>
               </div>
-              <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-xl bg-amber-50 border border-amber-200 text-amber-600 flex items-center justify-center">
                 <Sliders className="w-6 h-6" />
               </div>
             </div>
 
-            <div className="bg-[#12192b] border border-[#22304d] rounded-2xl p-4 flex items-center justify-between">
+            <div className="theme-card bg-white border border-slate-200 rounded-2xl p-4 flex items-center justify-between shadow-xs">
               <div>
-                <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Core Protected Roles</p>
-                <p className="text-2xl font-bold text-amber-400 mt-1">
+                <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">Core Protected Roles</p>
+                <p className="text-2xl font-bold font-heading text-amber-600 mt-1">
                   {roles.filter((r) => r.isSystem).length}
                 </p>
                 <p className="text-[11px] text-slate-500 mt-0.5">ADMIN, ACCOUNTANT, STORE, OPERATOR</p>
               </div>
-              <div className="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-600 flex items-center justify-center">
                 <ShieldCheck className="w-6 h-6" />
               </div>
             </div>
 
-            <div className="bg-[#12192b] border border-[#22304d] rounded-2xl p-4 flex items-center justify-between">
+            <div className="theme-card bg-white border border-slate-200 rounded-2xl p-4 flex items-center justify-between shadow-xs">
               <div>
-                <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Custom Factory Roles</p>
-                <p className="text-2xl font-bold text-blue-400 mt-1">
+                <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">Custom Factory Roles</p>
+                <p className="text-2xl font-bold font-heading text-blue-600 mt-1">
                   {roles.filter((r) => !r.isSystem).length}
                 </p>
                 <p className="text-[11px] text-slate-500 mt-0.5">Created by Administrator</p>
               </div>
-              <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-xl bg-blue-50 border border-blue-200 text-blue-600 flex items-center justify-center">
                 <Sparkles className="w-6 h-6" />
               </div>
             </div>
           </div>
 
           {/* Interactive Permissions Matrix */}
-          <div className="bg-[#111726] border border-[#202d48] rounded-3xl overflow-hidden shadow-2xl">
-            <div className="p-5 border-b border-[#202d48] flex flex-col md:flex-row md:items-center justify-between gap-3 bg-[#131b2e]/60">
+          <div className="theme-card bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-xs">
+            <div className="p-5 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-3 bg-slate-50">
               <div>
-                <h2 className="text-base font-bold text-white flex items-center gap-2">
+                <h2 className="text-base font-heading font-bold text-slate-900 flex items-center gap-2">
                   <span>Interactive Permission Matrix</span>
-                  <span className="text-[11px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full font-normal">
+                  <span className="text-[11px] bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full font-normal">
                     Toggle switches to adjust role clearances
                   </span>
                 </h2>
-                <p className="text-xs text-slate-400 mt-0.5">
-                  Click checkmarks to grant/revoke actions. Click <span className="text-amber-400 font-semibold">Save</span> to apply live to the database.
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Click checkmarks to grant/revoke actions. Click <span className="text-amber-600 font-semibold">Save</span> to apply live to the database.
                 </p>
               </div>
               <button
                 onClick={() => setShowNewRoleModal(true)}
-                className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-[#1c273e] hover:bg-[#253453] text-xs font-semibold text-amber-300 border border-amber-500/20"
+                className="btn-theme-primary flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-heading font-bold text-white shadow-xs"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span>Add Custom Role</span>
@@ -564,7 +564,7 @@ export default function AdminPage() {
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse text-xs">
                 <thead>
-                  <tr className="bg-[#0e1422] border-b border-[#202d48] text-slate-400 text-[11px] uppercase tracking-wider font-semibold">
+                  <tr className="bg-slate-50 border-b border-slate-200 text-slate-600 text-[11px] uppercase tracking-wider font-semibold">
                     <th className="py-3 px-4 min-w-[200px]">Role Profile</th>
                     {PERMISSION_COLUMNS.map((col) => (
                       <th key={col.key} className="py-3 px-3 text-center whitespace-nowrap" title={col.desc}>
@@ -574,38 +574,38 @@ export default function AdminPage() {
                     <th className="py-3 px-4 text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#1b253b]">
+                <tbody className="divide-y divide-slate-100">
                   {roles.map((role) => {
                     const isSaving = savingRoleId === role.id;
 
                     return (
-                      <tr key={role.id} className="hover:bg-[#151e33]/70 transition-colors">
+                      <tr key={role.id} className="hover:bg-amber-500/5 transition-colors">
                         {/* Role Details */}
                         <td className="py-3 px-4">
                           <div className="flex items-center gap-2.5">
                             <div
                               className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-xs ${
                                 role.name === 'ADMIN'
-                                  ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
+                                  ? 'bg-amber-50 text-amber-700 border border-amber-200'
                                   : role.name === 'ACCOUNTANT'
-                                  ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
+                                  ? 'bg-blue-50 text-blue-700 border border-blue-200'
                                   : role.name === 'STOREKEEPER'
-                                  ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
-                                  : 'bg-purple-500/20 text-purple-400 border border-purple-500/30'
+                                  ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                                  : 'bg-purple-50 text-purple-700 border border-purple-200'
                               }`}
                             >
                               {role.name.substring(0, 2)}
                             </div>
                             <div>
                               <div className="flex items-center gap-1.5">
-                                <span className="font-bold text-slate-100">{role.displayName}</span>
+                                <span className="font-bold text-slate-900">{role.displayName}</span>
                                 {role.isSystem && (
-                                  <span className="text-[9px] bg-slate-800 text-slate-400 px-1.5 py-0.2 rounded font-mono">
+                                  <span className="text-[9px] bg-slate-100 text-slate-600 px-1.5 py-0.2 rounded font-mono border border-slate-200">
                                     SYSTEM
                                   </span>
                                 )}
                               </div>
-                              <p className="text-[10px] text-slate-400 font-mono">{role.name}</p>
+                              <p className="text-[10px] text-slate-500 font-mono">{role.name}</p>
                               {role.description && (
                                 <p className="text-[10px] text-slate-500 mt-0.5 line-clamp-1 max-w-[180px]">
                                   {role.description}
@@ -634,11 +634,11 @@ export default function AdminPage() {
                                 className={`w-7 h-7 rounded-lg inline-flex items-center justify-center transition-all ${
                                   isEnabled
                                     ? col.key === 'canViewPrices'
-                                      ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 hover:bg-emerald-500/30'
+                                      ? 'bg-emerald-50 text-emerald-700 border border-emerald-300 hover:bg-emerald-100'
                                       : col.key === 'canAccessAdmin'
-                                      ? 'bg-amber-500/20 text-amber-400 border border-amber-500/40 hover:bg-amber-500/30'
-                                      : 'bg-blue-500/20 text-blue-400 border border-blue-500/40 hover:bg-blue-500/30'
-                                    : 'bg-[#182236] text-slate-600 border border-[#24334f] hover:text-slate-400 hover:bg-[#1f2c45]'
+                                      ? 'bg-amber-50 text-amber-700 border border-amber-300 hover:bg-amber-100'
+                                      : 'bg-blue-50 text-blue-700 border border-blue-300 hover:bg-blue-100'
+                                    : 'bg-slate-100 text-slate-400 border border-slate-200 hover:text-slate-600 hover:bg-slate-200'
                                 } ${isLocked ? 'cursor-not-allowed opacity-80' : 'cursor-pointer'}`}
                               >
                                 {isEnabled ? <Check className="w-4 h-4 stroke-[2.5]" /> : <X className="w-3.5 h-3.5 opacity-40" />}
@@ -654,7 +654,7 @@ export default function AdminPage() {
                               onClick={() => handleSaveRole(role)}
                               disabled={isSaving}
                               title="Save permissions to PostgreSQL"
-                              className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/30 font-semibold transition-all"
+                              className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-amber-50 hover:bg-amber-600 text-amber-700 hover:text-white border border-amber-200 font-semibold transition-all shadow-xs"
                             >
                               <Save className={`w-3.5 h-3.5 ${isSaving ? 'animate-spin' : ''}`} />
                               <span>Save</span>
@@ -664,7 +664,7 @@ export default function AdminPage() {
                               <button
                                 onClick={() => handleDeleteRole(role)}
                                 title="Delete custom role"
-                                className="p-1.5 rounded-lg text-rose-400 hover:bg-rose-500/10 border border-transparent hover:border-rose-500/20 transition-all"
+                                className="p-1.5 rounded-lg text-rose-600 hover:bg-rose-50 border border-transparent hover:border-rose-200 transition-all"
                               >
                                 <Trash2 className="w-4 h-4" />
                               </button>
@@ -679,12 +679,12 @@ export default function AdminPage() {
             </div>
 
             {/* Price Masking Alert Notice */}
-            <div className="p-4 bg-[#141b2c] border-t border-[#202d48] flex items-center justify-between text-xs text-slate-400">
+            <div className="p-4 bg-amber-50/50 border-t border-slate-200 flex items-center justify-between text-xs text-slate-600">
               <div className="flex items-center gap-2">
-                <Info className="w-4 h-4 text-amber-400 shrink-0" />
+                <Info className="w-4 h-4 text-amber-600 shrink-0" />
                 <span>
-                  <strong className="text-slate-200">Price Masking Security:</strong> When{' '}
-                  <span className="text-emerald-400 font-mono">View Prices (₹)</span> is disabled for a role, all rate columns (₹/KG, roll valuation, total asset value) are completely masked on the dashboard and stock register.
+                  <strong className="text-slate-800">Price Masking Security:</strong> When{' '}
+                  <span className="text-emerald-700 font-mono font-bold">View Prices (₹)</span> is disabled for a role, all rate columns (₹/KG, roll valuation, total asset value) are completely masked on the dashboard and stock register.
                 </span>
               </div>
             </div>
@@ -695,21 +695,21 @@ export default function AdminPage() {
       {/* TAB 2: USER MANAGEMENT */}
       {activeTab === 'users' && (
         <div className="space-y-6">
-          <div className="bg-[#111726] border border-[#202d48] rounded-3xl overflow-hidden shadow-2xl">
-            <div className="p-5 border-b border-[#202d48] flex flex-col md:flex-row md:items-center justify-between gap-3 bg-[#131b2e]/60">
+          <div className="theme-card bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-xs">
+            <div className="p-5 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-3 bg-slate-50">
               <div>
-                <h2 className="text-base font-bold text-white flex items-center gap-2">
-                  <Users className="w-4 h-4 text-amber-400" />
+                <h2 className="text-base font-heading font-bold text-slate-900 flex items-center gap-2">
+                  <Users className="w-4 h-4 text-amber-600" />
                   <span>Factory Personnel Accounts</span>
                 </h2>
-                <p className="text-xs text-slate-400 mt-0.5">
+                <p className="text-xs text-slate-500 mt-0.5">
                   Manage factory user logins, assign dynamic roles, and configure access statuses.
                 </p>
               </div>
 
               <button
                 onClick={() => setShowNewUserModal(true)}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-xs font-bold text-white shadow-lg shadow-emerald-500/25"
+                className="btn-theme-primary flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-heading font-bold text-white shadow-xs"
               >
                 <Plus className="w-4 h-4" />
                 <span>Add Factory User</span>
@@ -719,7 +719,7 @@ export default function AdminPage() {
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse text-xs">
                 <thead>
-                  <tr className="bg-[#0e1422] border-b border-[#202d48] text-slate-400 text-[11px] uppercase tracking-wider font-semibold">
+                  <tr className="bg-slate-50 border-b border-slate-200 text-slate-600 text-[11px] uppercase tracking-wider font-semibold">
                     <th className="py-3 px-4">User Details</th>
                     <th className="py-3 px-4">Username</th>
                     <th className="py-3 px-4">Assigned Role</th>
@@ -728,26 +728,26 @@ export default function AdminPage() {
                     <th className="py-3 px-4 text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#1b253b]">
+                <tbody className="divide-y divide-slate-100">
                   {users.map((u) => {
                     const isSuperAdmin = u.username === 'admin';
 
                     return (
-                      <tr key={u.id} className="hover:bg-[#151e33]/70 transition-colors">
+                      <tr key={u.id} className="hover:bg-amber-500/5 transition-colors">
                         <td className="py-3 px-4">
                           <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-500/20 to-amber-700/20 border border-amber-500/30 text-amber-300 font-bold flex items-center justify-center text-xs">
+                            <div className="w-9 h-9 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 font-bold flex items-center justify-center text-xs">
                               {u.fullName.substring(0, 2).toUpperCase()}
                             </div>
                             <div>
-                              <p className="font-bold text-white">{u.fullName}</p>
-                              <p className="text-[10px] text-slate-400">ID: {u.id.substring(0, 8)}...</p>
+                              <p className="font-bold text-slate-900">{u.fullName}</p>
+                              <p className="text-[10px] text-slate-500">ID: {u.id.substring(0, 8)}...</p>
                             </div>
                           </div>
                         </td>
 
                         <td className="py-3 px-4">
-                          <span className="font-mono bg-[#162035] px-2.5 py-1 rounded-lg border border-[#23314e] text-slate-300">
+                          <span className="font-mono bg-slate-100 px-2.5 py-1 rounded-lg border border-slate-200 text-slate-700">
                             {u.username}
                           </span>
                         </td>
@@ -757,18 +757,18 @@ export default function AdminPage() {
                             <span
                               className={`text-[11px] font-semibold px-2.5 py-1 rounded-lg border ${
                                 u.roleName === 'ADMIN'
-                                  ? 'bg-amber-500/15 text-amber-300 border-amber-500/30'
+                                  ? 'bg-amber-50 text-amber-700 border-amber-200'
                                   : u.roleName === 'ACCOUNTANT'
-                                  ? 'bg-blue-500/15 text-blue-300 border-blue-500/30'
+                                  ? 'bg-blue-50 text-blue-700 border-blue-200'
                                   : u.roleName === 'STOREKEEPER'
-                                  ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30'
-                                  : 'bg-purple-500/15 text-purple-300 border-purple-500/30'
+                                  ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                                  : 'bg-purple-50 text-purple-700 border-purple-200'
                               }`}
                             >
                               {u.roleDisplayName || u.roleName}
                             </span>
                             {u.canAccessAdmin && (
-                              <span title="Has Admin Portal Clearance" className="text-amber-400">
+                              <span title="Has Admin Portal Clearance" className="text-amber-600">
                                 <ShieldAlert className="w-3.5 h-3.5" />
                               </span>
                             )}
@@ -779,18 +779,18 @@ export default function AdminPage() {
                           <span
                             className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold border ${
                               u.isActive
-                                ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30'
-                                : 'bg-rose-500/15 text-rose-300 border-rose-500/30'
+                                ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                                : 'bg-rose-50 text-rose-700 border-rose-200'
                             }`}
                           >
                             <span
-                              className={`w-1.5 h-1.5 rounded-full ${u.isActive ? 'bg-emerald-400' : 'bg-rose-400'}`}
+                              className={`w-1.5 h-1.5 rounded-full ${u.isActive ? 'bg-emerald-500' : 'bg-rose-500'}`}
                             ></span>
                             <span>{u.isActive ? 'Active' : 'Disabled'}</span>
                           </span>
                         </td>
 
-                        <td className="py-3 px-4 text-slate-400 text-xs">
+                        <td className="py-3 px-4 text-slate-500 text-xs">
                           {new Date(u.createdAt).toLocaleDateString('en-IN', {
                             day: 'numeric',
                             month: 'short',
@@ -808,7 +808,7 @@ export default function AdminPage() {
                                 setEditIsActive(u.isActive);
                                 setEditPassword('');
                               }}
-                              className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-[#182338] hover:bg-[#202e48] text-slate-300 border border-[#263756] font-medium"
+                              className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 font-medium shadow-xs"
                             >
                               <Edit2 className="w-3.5 h-3.5" />
                               <span>Edit</span>
@@ -818,7 +818,7 @@ export default function AdminPage() {
                               <button
                                 onClick={() => handleDeleteUser(u)}
                                 title="Delete user account"
-                                className="p-1.5 rounded-lg text-rose-400 hover:bg-rose-500/10 border border-transparent hover:border-rose-500/20"
+                                className="p-1.5 rounded-lg text-rose-600 hover:bg-rose-50 border border-transparent hover:border-rose-200 transition-colors"
                               >
                                 <Trash2 className="w-4 h-4" />
                               </button>
@@ -837,20 +837,20 @@ export default function AdminPage() {
 
       {/* TAB 3: SECURITY AUDIT LOG */}
       {activeTab === 'audit' && (
-        <div className="bg-[#111726] border border-[#202d48] rounded-3xl overflow-hidden shadow-2xl">
-          <div className="p-5 border-b border-[#202d48] bg-[#131b2e]/60 flex items-center justify-between">
+        <div className="theme-card bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-xs">
+          <div className="p-5 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
             <div>
-              <h2 className="text-base font-bold text-white flex items-center gap-2">
-                <History className="w-4 h-4 text-amber-400" />
+              <h2 className="text-base font-heading font-bold text-slate-900 flex items-center gap-2">
+                <History className="w-4 h-4 text-amber-600" />
                 <span>Security & Role Audit Trail</span>
               </h2>
-              <p className="text-xs text-slate-400 mt-0.5">
+              <p className="text-xs text-slate-500 mt-0.5">
                 Immutable ledger recording all role modifications, permission adjustments, user sessions, and credentials updates.
               </p>
             </div>
             <button
               onClick={fetchData}
-              className="flex items-center gap-1.5 text-xs text-slate-300 bg-[#1a253c] hover:bg-[#22304d] px-3 py-1.5 rounded-xl border border-[#29395b]"
+              className="btn-theme-secondary flex items-center gap-1.5 text-xs text-slate-700 px-3 py-1.5 rounded-xl border border-slate-200"
             >
               <RefreshCw className="w-3.5 h-3.5" />
               <span>Refresh Log</span>
@@ -859,7 +859,7 @@ export default function AdminPage() {
 
           <div className="overflow-x-auto max-h-[550px] overflow-y-auto">
             <table className="w-full text-left border-collapse text-xs">
-              <thead className="sticky top-0 z-10 bg-[#0e1422] border-b border-[#202d48] text-slate-400 text-[11px] uppercase tracking-wider font-semibold">
+              <thead className="sticky top-0 z-10 bg-slate-50 border-b border-slate-200 text-slate-600 text-[11px] uppercase tracking-wider font-semibold">
                 <tr>
                   <th className="py-3 px-4">Timestamp</th>
                   <th className="py-3 px-4">Action</th>
@@ -868,7 +868,7 @@ export default function AdminPage() {
                   <th className="py-3 px-4 text-right">Initiator</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#1b253b]">
+              <tbody className="divide-y divide-slate-100">
                 {auditLogs.length === 0 ? (
                   <tr>
                     <td colSpan={5} className="py-8 text-center text-slate-500">
@@ -877,8 +877,8 @@ export default function AdminPage() {
                   </tr>
                 ) : (
                   auditLogs.map((log) => (
-                    <tr key={log.id} className="hover:bg-[#141d30]/60 transition-colors">
-                      <td className="py-3 px-4 text-slate-400 font-mono text-[11px] whitespace-nowrap">
+                    <tr key={log.id} className="hover:bg-amber-500/5 transition-colors">
+                      <td className="py-3 px-4 text-slate-500 font-mono text-[11px] whitespace-nowrap">
                         {new Date(log.timestamp).toLocaleString('en-IN', {
                           day: '2-digit',
                           month: 'short',
@@ -893,25 +893,25 @@ export default function AdminPage() {
                         <span
                           className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold ${
                             log.action === 'UPDATE'
-                              ? 'bg-blue-500/15 text-blue-300 border border-blue-500/30'
+                              ? 'bg-blue-50 text-blue-700 border border-blue-200'
                               : log.action === 'DELETE'
-                              ? 'bg-rose-500/15 text-rose-300 border border-rose-500/30'
-                              : 'bg-emerald-500/15 text-emerald-300 border border-emerald-500/30'
+                              ? 'bg-rose-50 text-rose-700 border border-rose-200'
+                              : 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                           }`}
                         >
                           {log.action}
                         </span>
                       </td>
 
-                      <td className="py-3 px-4 font-mono text-slate-300 text-[11px]">
+                      <td className="py-3 px-4 font-mono text-slate-700 text-[11px]">
                         {log.entityName}
                       </td>
 
-                      <td className="py-3 px-4 text-slate-300 text-xs">
+                      <td className="py-3 px-4 text-slate-700 text-xs">
                         {log.details}
                       </td>
 
-                      <td className="py-3 px-4 text-right font-mono text-amber-400 text-[11px]">
+                      <td className="py-3 px-4 text-right font-mono text-amber-600 text-[11px]">
                         @{log.user}
                       </td>
                     </tr>
@@ -925,23 +925,23 @@ export default function AdminPage() {
 
       {/* MODAL: CREATE CUSTOM ROLE */}
       {showNewRoleModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-in fade-in-50">
-          <div className="bg-[#12192b] border border-[#253556] rounded-3xl max-w-2xl w-full p-6 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between border-b border-[#202d48] pb-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs animate-in fade-in-50">
+          <div className="theme-card bg-white border border-slate-200 rounded-3xl max-w-2xl w-full p-6 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between border-b border-slate-200 pb-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 border border-amber-200 flex items-center justify-center">
                   <Sliders className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-white">Create Custom Role</h3>
-                  <p className="text-xs text-slate-400">
+                  <h3 className="text-lg font-heading font-bold text-slate-900">Create Custom Role</h3>
+                  <p className="text-xs text-slate-500">
                     Define a tailored factory role and select exact permission clearances.
                   </p>
                 </div>
               </div>
               <button
                 onClick={() => setShowNewRoleModal(false)}
-                className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-[#1a253c]"
+                className="p-1 rounded-lg text-slate-400 hover:text-slate-800 hover:bg-slate-100"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -950,7 +950,7 @@ export default function AdminPage() {
             <form onSubmit={handleCreateRole} className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1.5 uppercase tracking-wider">
+                  <label className="block text-xs font-semibold text-slate-700 mb-1.5 uppercase tracking-wider">
                     Role Code (Identifier) *
                   </label>
                   <input
@@ -959,13 +959,13 @@ export default function AdminPage() {
                     placeholder="e.g. QUALITY_SUPERVISOR"
                     value={newRoleName}
                     onChange={(e) => setNewRoleName(e.target.value.toUpperCase().replace(/\s+/g, '_'))}
-                    className="w-full bg-[#162035] border border-[#243452] rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 font-mono focus:border-amber-500 outline-none"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-slate-800 placeholder-slate-400 font-mono focus:border-amber-500 focus:bg-white outline-none transition-colors"
                   />
                   <p className="text-[10px] text-slate-500 mt-1">Unique uppercase code without spaces</p>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1.5 uppercase tracking-wider">
+                  <label className="block text-xs font-semibold text-slate-700 mb-1.5 uppercase tracking-wider">
                     Display Title *
                   </label>
                   <input
@@ -974,13 +974,13 @@ export default function AdminPage() {
                     placeholder="e.g. Quality & Floor Inspector"
                     value={newRoleDisplay}
                     onChange={(e) => setNewRoleDisplay(e.target.value)}
-                    className="w-full bg-[#162035] border border-[#243452] rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:border-amber-500 outline-none"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:border-amber-500 focus:bg-white outline-none transition-colors"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5 uppercase tracking-wider">
+                <label className="block text-xs font-semibold text-slate-700 mb-1.5 uppercase tracking-wider">
                   Role Description
                 </label>
                 <textarea
@@ -988,13 +988,13 @@ export default function AdminPage() {
                   placeholder="e.g. Responsible for sampling burst factor, roll quality approval, and corrugation output."
                   value={newRoleDesc}
                   onChange={(e) => setNewRoleDesc(e.target.value)}
-                  className="w-full bg-[#162035] border border-[#243452] rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:border-amber-500 outline-none"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-800 placeholder-slate-400 focus:border-amber-500 focus:bg-white outline-none transition-colors"
                 />
               </div>
 
               {/* Permission Matrix for New Role */}
-              <div className="border border-[#202d48] rounded-2xl p-4 bg-[#0e1422]/60 space-y-3">
-                <p className="text-xs font-bold text-slate-200 uppercase tracking-wider">
+              <div className="border border-slate-200 rounded-2xl p-4 bg-slate-50 space-y-3">
+                <p className="text-xs font-bold text-slate-800 uppercase tracking-wider">
                   Grant Permissions for this Role:
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 max-h-56 overflow-y-auto pr-1">
@@ -1006,8 +1006,8 @@ export default function AdminPage() {
                         key={col.key}
                         className={`flex items-center justify-between p-2.5 rounded-xl border cursor-pointer transition-all ${
                           isChecked
-                            ? 'bg-amber-500/10 border-amber-500/30 text-white'
-                            : 'bg-[#141b2c] border-[#1f2c45] text-slate-400 hover:border-slate-600'
+                            ? 'bg-amber-50/80 border-amber-400 text-slate-900 shadow-xs'
+                            : 'bg-white border-slate-200 text-slate-600 hover:border-slate-300'
                         }`}
                       >
                         <div>
@@ -1023,7 +1023,7 @@ export default function AdminPage() {
                               [col.key]: e.target.checked,
                             }))
                           }
-                          className="w-4 h-4 rounded text-amber-500 bg-[#1e2a44] border-slate-600 focus:ring-0 cursor-pointer"
+                          className="w-4 h-4 rounded text-amber-600 border-slate-300 focus:ring-0 cursor-pointer"
                         />
                       </label>
                     );
@@ -1031,17 +1031,17 @@ export default function AdminPage() {
                 </div>
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#202d48]">
+              <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-200">
                 <button
                   type="button"
                   onClick={() => setShowNewRoleModal(false)}
-                  className="px-4 py-2 rounded-xl bg-[#162035] text-slate-300 hover:bg-[#1e2b46] text-xs font-semibold"
+                  className="btn-theme-secondary px-4 py-2 rounded-xl text-slate-700 hover:text-slate-900 text-xs font-semibold"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold shadow-lg shadow-amber-500/25"
+                  className="btn-theme-primary px-5 py-2 rounded-xl text-white text-xs font-heading font-bold shadow-xs"
                 >
                   Save Role to PostgreSQL
                 </button>
@@ -1053,23 +1053,23 @@ export default function AdminPage() {
 
       {/* MODAL: ADD NEW USER */}
       {showNewUserModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-in fade-in-50">
-          <div className="bg-[#12192b] border border-[#253556] rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-5">
-            <div className="flex items-center justify-between border-b border-[#202d48] pb-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs animate-in fade-in-50">
+          <div className="theme-card bg-white border border-slate-200 rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-5">
+            <div className="flex items-center justify-between border-b border-slate-200 pb-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 border border-amber-200 flex items-center justify-center">
                   <Users className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-white">Add Factory User</h3>
-                  <p className="text-xs text-slate-400">
+                  <h3 className="text-lg font-heading font-bold text-slate-900">Add Factory User</h3>
+                  <p className="text-xs text-slate-500">
                     Create a new system user login and assign an active role.
                   </p>
                 </div>
               </div>
               <button
                 onClick={() => setShowNewUserModal(false)}
-                className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-[#1a253c]"
+                className="p-1 rounded-lg text-slate-400 hover:text-slate-800 hover:bg-slate-100"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -1077,7 +1077,7 @@ export default function AdminPage() {
 
             <form onSubmit={handleCreateUser} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5 uppercase tracking-wider">
+                <label className="block text-xs font-semibold text-slate-700 mb-1.5 uppercase tracking-wider">
                   Full Name *
                 </label>
                 <input
@@ -1086,13 +1086,13 @@ export default function AdminPage() {
                   placeholder="e.g. Ramesh Kumar"
                   value={newFullName}
                   onChange={(e) => setNewFullName(e.target.value)}
-                  className="w-full bg-[#162035] border border-[#243452] rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:border-emerald-500 outline-none"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:border-amber-500 focus:bg-white outline-none transition-colors"
                 />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1.5 uppercase tracking-wider">
+                  <label className="block text-xs font-semibold text-slate-700 mb-1.5 uppercase tracking-wider">
                     Username *
                   </label>
                   <input
@@ -1101,12 +1101,12 @@ export default function AdminPage() {
                     placeholder="e.g. ramesh"
                     value={newUsername}
                     onChange={(e) => setNewUsername(e.target.value.toLowerCase().trim())}
-                    className="w-full bg-[#162035] border border-[#243452] rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 font-mono focus:border-emerald-500 outline-none"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-slate-800 placeholder-slate-400 font-mono focus:border-amber-500 focus:bg-white outline-none transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1.5 uppercase tracking-wider">
+                  <label className="block text-xs font-semibold text-slate-700 mb-1.5 uppercase tracking-wider">
                     Initial Password *
                   </label>
                   <input
@@ -1115,19 +1115,19 @@ export default function AdminPage() {
                     placeholder="e.g. ramesh123"
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
-                    className="w-full bg-[#162035] border border-[#243452] rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:border-emerald-500 outline-none"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:border-amber-500 focus:bg-white outline-none transition-colors"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5 uppercase tracking-wider">
+                <label className="block text-xs font-semibold text-slate-700 mb-1.5 uppercase tracking-wider">
                   Assign System Role *
                 </label>
                 <select
                   value={newUserRole}
                   onChange={(e) => setNewUserRole(e.target.value)}
-                  className="w-full bg-[#162035] border border-[#243452] rounded-xl px-3.5 py-2.5 text-xs text-amber-300 font-bold focus:border-emerald-500 outline-none"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-amber-700 font-bold focus:border-amber-500 focus:bg-white outline-none transition-colors"
                 >
                   {roles.map((r) => (
                     <option key={r.name} value={r.name}>
@@ -1140,17 +1140,17 @@ export default function AdminPage() {
                 </p>
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#202d48]">
+              <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-200">
                 <button
                   type="button"
                   onClick={() => setShowNewUserModal(false)}
-                  className="px-4 py-2 rounded-xl bg-[#162035] text-slate-300 hover:bg-[#1e2b46] text-xs font-semibold"
+                  className="btn-theme-secondary px-4 py-2 rounded-xl text-slate-700 hover:text-slate-900 text-xs font-semibold"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold shadow-lg shadow-emerald-500/25"
+                  className="btn-theme-primary px-5 py-2 rounded-xl text-white text-xs font-heading font-bold shadow-xs"
                 >
                   Create User Account
                 </button>
@@ -1162,21 +1162,21 @@ export default function AdminPage() {
 
       {/* MODAL: EDIT USER */}
       {editingUser && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-in fade-in-50">
-          <div className="bg-[#12192b] border border-[#253556] rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-5">
-            <div className="flex items-center justify-between border-b border-[#202d48] pb-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs animate-in fade-in-50">
+          <div className="theme-card bg-white border border-slate-200 rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-5">
+            <div className="flex items-center justify-between border-b border-slate-200 pb-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/20 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 border border-amber-200 flex items-center justify-center">
                   <Edit2 className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-white">Edit User: {editingUser.username}</h3>
-                  <p className="text-xs text-slate-400">Modify user full name, role assignment, or reset password.</p>
+                  <h3 className="text-lg font-heading font-bold text-slate-900">Edit User: {editingUser.username}</h3>
+                  <p className="text-xs text-slate-500">Modify user full name, role assignment, or reset password.</p>
                 </div>
               </div>
               <button
                 onClick={() => setEditingUser(null)}
-                className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-[#1a253c]"
+                className="p-1 rounded-lg text-slate-400 hover:text-slate-800 hover:bg-slate-100"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -1184,7 +1184,7 @@ export default function AdminPage() {
 
             <form onSubmit={handleUpdateUser} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5 uppercase tracking-wider">
+                <label className="block text-xs font-semibold text-slate-700 mb-1.5 uppercase tracking-wider">
                   Full Name
                 </label>
                 <input
@@ -1192,19 +1192,19 @@ export default function AdminPage() {
                   required
                   value={editFullName}
                   onChange={(e) => setEditFullName(e.target.value)}
-                  className="w-full bg-[#162035] border border-[#243452] rounded-xl px-3.5 py-2.5 text-xs text-white focus:border-blue-500 outline-none"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-slate-800 focus:border-amber-500 focus:bg-white outline-none transition-colors"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5 uppercase tracking-wider">
+                <label className="block text-xs font-semibold text-slate-700 mb-1.5 uppercase tracking-wider">
                   Assigned Role
                 </label>
                 <select
                   value={editRoleName}
                   disabled={editingUser.username === 'admin'}
                   onChange={(e) => setEditRoleName(e.target.value)}
-                  className={`w-full bg-[#162035] border border-[#243452] rounded-xl px-3.5 py-2.5 text-xs text-amber-300 font-bold focus:border-blue-500 outline-none ${
+                  className={`w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-amber-700 font-bold focus:border-amber-500 focus:bg-white outline-none transition-colors ${
                     editingUser.username === 'admin' ? 'opacity-70 cursor-not-allowed' : ''
                   }`}
                 >
@@ -1215,12 +1215,12 @@ export default function AdminPage() {
                   ))}
                 </select>
                 {editingUser.username === 'admin' && (
-                  <p className="text-[10px] text-amber-400 mt-1">The primary system admin role cannot be changed.</p>
+                  <p className="text-[10px] text-amber-600 mt-1">The primary system admin role cannot be changed.</p>
                 )}
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5 uppercase tracking-wider">
+                <label className="block text-xs font-semibold text-slate-700 mb-1.5 uppercase tracking-wider">
                   Reset Password (leave empty to keep current)
                 </label>
                 <input
@@ -1228,39 +1228,39 @@ export default function AdminPage() {
                   placeholder="New password..."
                   value={editPassword}
                   onChange={(e) => setEditPassword(e.target.value)}
-                  className="w-full bg-[#162035] border border-[#243452] rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:border-blue-500 outline-none"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:border-amber-500 focus:bg-white outline-none transition-colors"
                 />
               </div>
 
               <div>
-                <label className="flex items-center gap-3 p-3 rounded-xl bg-[#162035] border border-[#243452] cursor-pointer">
+                <label className="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-200 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={editIsActive}
                     disabled={editingUser.username === 'admin'}
                     onChange={(e) => setEditIsActive(e.target.checked)}
-                    className="w-4 h-4 rounded text-blue-500 bg-[#1e2a44] border-slate-600 focus:ring-0 cursor-pointer"
+                    className="w-4 h-4 rounded text-amber-600 border-slate-300 focus:ring-0 cursor-pointer"
                   />
                   <div>
-                    <p className="text-xs font-bold text-white">Active Account</p>
-                    <p className="text-[10px] text-slate-400">
+                    <p className="text-xs font-bold text-slate-900">Active Account</p>
+                    <p className="text-[10px] text-slate-500">
                       When unchecked, the user will be blocked from logging into the software.
                     </p>
                   </div>
                 </label>
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#202d48]">
+              <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-200">
                 <button
                   type="button"
                   onClick={() => setEditingUser(null)}
-                  className="px-4 py-2 rounded-xl bg-[#162035] text-slate-300 hover:bg-[#1e2b46] text-xs font-semibold"
+                  className="btn-theme-secondary px-4 py-2 rounded-xl text-slate-700 hover:text-slate-900 text-xs font-semibold"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-xl bg-blue-500 hover:bg-blue-600 text-white text-xs font-bold shadow-lg shadow-blue-500/25"
+                  className="btn-theme-primary px-5 py-2 rounded-xl text-white text-xs font-heading font-bold shadow-xs"
                 >
                   Save Changes
                 </button>

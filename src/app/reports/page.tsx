@@ -104,26 +104,26 @@ export default function ValuationReportsPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 no-print">
         <div>
-          <h2 className="text-2xl font-extrabold text-white tracking-tight flex items-center gap-2.5">
-            <BarChart3 className="w-6 h-6 text-amber-400" />
+          <h2 className="text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2.5 font-heading">
+            <BarChart3 className="w-6 h-6 text-amber-600" />
             Stock Valuation & Audit Statements (FY 2026-2027)
           </h2>
-          <p className="text-xs text-slate-400 mt-1">
-            Financial inventory reporting matching Om Namasivayam Packaging ledger summary.
+          <p className="text-xs text-slate-500 mt-1 font-medium">
+            Financial inventory reporting matching OM Namasivayam Packaging ledger summary.
           </p>
         </div>
 
         <div className="flex items-center gap-3">
           <button
             onClick={() => window.print()}
-            className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#162035] hover:bg-[#202d4b] border border-[#22314e] text-slate-300 font-semibold text-xs shadow-md"
+            className="flex items-center gap-2 px-4 py-2 rounded-xl btn-theme-secondary text-xs font-semibold"
           >
-            <Printer className="w-4 h-4" />
+            <Printer className="w-4 h-4 text-amber-600" />
             <span>Print Report</span>
           </button>
           <button
             onClick={handleExportFullValuation}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-semibold text-xs shadow-lg shadow-amber-500/20"
+            className="flex items-center gap-2 px-5 py-2.5 btn-theme-primary text-xs font-bold"
           >
             <Download className="w-4 h-4" />
             <span>Export Valuation Excel</span>
@@ -132,73 +132,73 @@ export default function ValuationReportsPage() {
       </div>
 
       {/* Official Audit Summary Table (Mirror of Row 181 in Excel) */}
-      <div className="bg-[#111726] border border-[#1e293b] rounded-2xl p-6 shadow-xl">
-        <div className="border-b border-[#1e293b] pb-3 mb-4 flex items-center justify-between">
+      <div className="theme-card bg-white border border-slate-200 rounded-2xl p-6 shadow-xs">
+        <div className="border-b border-slate-200 pb-3 mb-4 flex items-center justify-between">
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-amber-800 bg-amber-100 px-2.5 py-0.5 rounded-full border border-amber-200 font-heading">
               Official Closing Stock Statement
             </span>
-            <h3 className="text-base font-bold text-white mt-1">
+            <h3 className="text-base font-bold text-slate-900 mt-1 font-heading">
               OM NAMASIVAYAM PACKAGING • 2026-2027
             </h3>
           </div>
-          <span className="text-xs text-slate-400 font-mono">
+          <span className="text-xs text-slate-500 font-mono">
             Generated: {new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}
           </span>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 font-mono text-center">
-          <div className="p-4 rounded-xl bg-[#162035] border border-[#22314e]">
-            <span className="text-[10px] uppercase text-slate-400 font-sans block mb-1">
+          <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
+            <span className="text-[10px] uppercase text-slate-500 font-sans font-bold block mb-1">
               TOTAL STOCK INWARDED
             </span>
-            <span className="text-xl font-bold text-white block">
+            <span className="text-xl font-bold text-slate-900 block">
               {summary ? formatKg(summary.totalWeight) : '...'}
             </span>
             <span className="text-[11px] text-slate-500 font-sans">{summary?.totalReels || 0} Total Rolls</span>
           </div>
 
-          <div className="p-4 rounded-xl bg-[#162035] border border-emerald-500/30">
-            <span className="text-[10px] uppercase text-emerald-400 font-sans block mb-1">
+          <div className="p-4 rounded-xl bg-emerald-50/60 border border-emerald-200">
+            <span className="text-[10px] uppercase text-emerald-800 font-sans font-bold block mb-1">
               AVAL BAL STOCK (LIVE)
             </span>
-            <span className="text-xl font-bold text-emerald-400 block">
+            <span className="text-xl font-bold text-emerald-700 block">
               {summary ? formatKg(summary.balanceWeight) : '...'}
             </span>
-            <span className="text-[11px] text-emerald-500 font-sans">
+            <span className="text-[11px] text-emerald-600 font-sans font-semibold">
               {summary ? summary.activeReels + summary.partialReels : 0} Available Rolls
             </span>
           </div>
 
-          <div className="p-4 rounded-xl bg-[#162035] border border-[#22314e]">
-            <span className="text-[10px] uppercase text-slate-400 font-sans block mb-1">
+          <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
+            <span className="text-[10px] uppercase text-slate-500 font-sans font-bold block mb-1">
               TOTAL INWARD VALUATION
             </span>
-            <span className="text-xl font-bold text-amber-300 block">
+            <span className="text-xl font-bold text-amber-600 block">
               {summary ? formatCurrency(summary.totalAmount) : '...'}
             </span>
             <span className="text-[11px] text-slate-500 font-sans">Total Paper Purchases</span>
           </div>
 
-          <div className="p-4 rounded-xl bg-[#162035] border border-purple-500/30">
-            <span className="text-[10px] uppercase text-purple-400 font-sans block mb-1">
+          <div className="p-4 rounded-xl bg-purple-50/60 border border-purple-200">
+            <span className="text-[10px] uppercase text-purple-800 font-sans font-bold block mb-1">
               AVAL STOCK VALUATION
             </span>
-            <span className="text-xl font-bold text-purple-400 block">
+            <span className="text-xl font-bold text-purple-700 block">
               {summary ? formatCurrency(summary.balanceAmount) : '...'}
             </span>
-            <span className="text-[11px] text-purple-400 font-sans">Current Balance Asset</span>
+            <span className="text-[11px] text-purple-600 font-sans font-semibold">Current Balance Asset</span>
           </div>
         </div>
       </div>
 
       {/* Detailed GSM Quality Valuation Breakdown */}
-      <div className="bg-[#111726] border border-[#1e293b] rounded-2xl p-6 shadow-xl">
-        <h3 className="font-bold text-white text-sm mb-3">GSM & Quality Category Ledger</h3>
+      <div className="theme-card bg-white border border-slate-200 rounded-2xl p-6 shadow-xs">
+        <h3 className="font-bold text-slate-900 text-sm mb-3 font-heading">GSM & Quality Category Ledger</h3>
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
-              <tr className="border-b border-[#23314e] text-slate-400 uppercase text-[10px] tracking-wider bg-[#0d121f]/60 font-semibold">
+              <tr className="border-b border-slate-200 text-slate-600 uppercase text-[10px] tracking-wider bg-slate-50 font-heading font-bold">
                 <th className="py-3 px-3">Quality Category</th>
                 <th className="py-3 px-3 text-center">Rolls Count</th>
                 <th className="py-3 px-3 text-right">Inward Weight (KG)</th>
@@ -209,7 +209,7 @@ export default function ValuationReportsPage() {
                 {!isOperator && <th className="py-3 px-3 text-right">Balance Amount</th>}
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#1e293b]/70 font-mono">
+            <tbody className="divide-y divide-slate-100 font-mono">
               {summary &&
                 Object.entries(summary.byGsm).map(([cat, stats]) => {
                   const consumePct =
@@ -218,32 +218,32 @@ export default function ValuationReportsPage() {
                       : '0.0';
 
                   return (
-                    <tr key={cat} className="hover:bg-[#162035]/60 transition-colors">
-                      <td className="py-3 px-3 font-sans font-bold text-white">{cat}</td>
-                      <td className="py-3 px-3 text-center text-amber-400 font-semibold">
+                    <tr key={cat} className="hover:bg-amber-500/5 transition-colors">
+                      <td className="py-3 px-3 font-sans font-bold text-slate-900">{cat}</td>
+                      <td className="py-3 px-3 text-center text-amber-600 font-semibold">
                         {stats.count}
                       </td>
-                      <td className="py-3 px-3 text-right text-slate-300">
+                      <td className="py-3 px-3 text-right text-slate-700">
                         {stats.totalWeight.toFixed(1)}
                       </td>
-                      <td className="py-3 px-3 text-right text-slate-400">
+                      <td className="py-3 px-3 text-right text-slate-500">
                         {stats.usedWeight.toFixed(1)}
                       </td>
-                      <td className="py-3 px-3 text-right font-bold text-emerald-400">
+                      <td className="py-3 px-3 text-right font-bold text-emerald-600">
                         {stats.balanceWeight.toFixed(1)}
                       </td>
                       <td className="py-3 px-3 text-center">
-                        <span className="text-[11px] bg-[#0d121f] px-2 py-0.5 rounded-full border border-[#1e293b] text-slate-300">
+                        <span className="text-[11px] bg-slate-100 px-2 py-0.5 rounded-full border border-slate-200 text-slate-700">
                           {consumePct}%
                         </span>
                       </td>
                       {!isOperator && (
-                        <td className="py-3 px-3 text-right text-slate-400">
+                        <td className="py-3 px-3 text-right text-slate-600">
                           {formatCurrency(stats.totalAmount)}
                         </td>
                       )}
                       {!isOperator && (
-                        <td className="py-3 px-3 text-right font-bold text-amber-300">
+                        <td className="py-3 px-3 text-right font-bold text-amber-600">
                           {formatCurrency(stats.balanceAmount)}
                         </td>
                       )}
@@ -256,12 +256,12 @@ export default function ValuationReportsPage() {
       </div>
 
       {/* Mill Supplier Analysis */}
-      <div className="bg-[#111726] border border-[#1e293b] rounded-2xl p-6 shadow-xl">
-        <h3 className="font-bold text-white text-sm mb-3">Paper Mill Supplier Distribution</h3>
+      <div className="theme-card bg-white border border-slate-200 rounded-2xl p-6 shadow-xs">
+        <h3 className="font-bold text-slate-900 text-sm mb-3 font-heading">Paper Mill Supplier Distribution</h3>
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
-              <tr className="border-b border-[#23314e] text-slate-400 uppercase text-[10px] tracking-wider bg-[#0d121f]/60 font-semibold">
+              <tr className="border-b border-slate-200 text-slate-600 uppercase text-[10px] tracking-wider bg-slate-50 font-semibold">
                 <th className="py-3 px-3">Mill / Supplier Name</th>
                 <th className="py-3 px-3 text-center">Total Rolls</th>
                 <th className="py-3 px-3 text-right">Total Tonnage (KG)</th>
@@ -270,7 +270,7 @@ export default function ValuationReportsPage() {
                 {!isOperator && <th className="py-3 px-3 text-right">Total Purchase Value</th>}
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#1e293b]/70 font-mono">
+            <tbody className="divide-y divide-slate-100 font-mono">
               {summary &&
                 Object.entries(summary.byMill).map(([mill, stats]) => {
                   const share =
@@ -279,18 +279,18 @@ export default function ValuationReportsPage() {
                       : '0.0';
 
                   return (
-                    <tr key={mill} className="hover:bg-[#162035]/60 transition-colors">
-                      <td className="py-3 px-3 font-sans font-bold text-amber-400">{mill}</td>
-                      <td className="py-3 px-3 text-center text-slate-300">{stats.count}</td>
-                      <td className="py-3 px-3 text-right font-bold text-white">
+                    <tr key={mill} className="hover:bg-amber-500/5 transition-colors">
+                      <td className="py-3 px-3 font-sans font-bold text-amber-600">{mill}</td>
+                      <td className="py-3 px-3 text-center text-slate-700">{stats.count}</td>
+                      <td className="py-3 px-3 text-right font-bold text-slate-900">
                         {stats.totalWeight.toFixed(1)}
                       </td>
-                      <td className="py-3 px-3 text-right text-emerald-400">
+                      <td className="py-3 px-3 text-right text-emerald-600 font-semibold">
                         {stats.balanceWeight.toFixed(1)}
                       </td>
-                      <td className="py-3 px-3 text-center text-slate-300">{share}%</td>
+                      <td className="py-3 px-3 text-center text-slate-600">{share}%</td>
                       {!isOperator && (
-                        <td className="py-3 px-3 text-right font-semibold text-amber-300">
+                        <td className="py-3 px-3 text-right font-semibold text-amber-600">
                           {formatCurrency(stats.totalAmount)}
                         </td>
                       )}

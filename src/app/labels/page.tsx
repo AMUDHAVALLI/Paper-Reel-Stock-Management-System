@@ -99,23 +99,23 @@ export default function LabelsPrintStudioPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 no-print">
         <div>
-          <h2 className="text-2xl font-extrabold text-white tracking-tight flex items-center gap-2.5">
-            <QrCode className="w-6 h-6 text-amber-400" />
+          <h2 className="text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2.5 font-heading">
+            <QrCode className="w-6 h-6 text-amber-600" />
             Barcode & QR Label Print Studio
           </h2>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-500 mt-1 font-medium">
             Print adhesive roll tags with embedded specifications for warehouse inventory and rapid mobile scanning.
           </p>
         </div>
 
         <div className="flex items-center gap-3">
-          <span className="text-xs text-slate-400 font-mono">
+          <span className="text-xs text-slate-500 font-mono">
             {selectedIds.size} of {reels.length} selected
           </span>
           <button
             onClick={() => window.print()}
             disabled={selectedIds.size === 0}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-semibold text-xs shadow-lg shadow-amber-500/20 disabled:opacity-50 transition-all hover:scale-[1.02]"
+            className="flex items-center gap-2 px-5 py-2.5 btn-theme-primary text-xs font-bold disabled:opacity-50"
           >
             <Printer className="w-4 h-4" />
             <span>Print {selectedIds.size} Labels</span>
@@ -126,12 +126,12 @@ export default function LabelsPrintStudioPage() {
       {/* Selector & Preview Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left: Reel Selection List (5 cols) */}
-        <div className="lg:col-span-5 bg-[#111726] border border-[#1e293b] rounded-2xl p-5 shadow-xl flex flex-col h-[700px] no-print">
+        <div className="lg:col-span-5 theme-card bg-white border border-slate-200 rounded-2xl p-5 shadow-xs flex flex-col h-[700px] no-print">
           <div className="flex items-center justify-between mb-3">
-            <h3 className="font-bold text-white text-sm">Select Rolls</h3>
+            <h3 className="font-bold text-slate-900 text-sm font-heading">Select Rolls</h3>
             <button
               onClick={selectAll}
-              className="text-xs text-amber-400 hover:text-amber-300 font-semibold flex items-center gap-1.5"
+              className="text-xs text-amber-600 hover:text-amber-700 font-bold flex items-center gap-1.5"
             >
               {selectedIds.size === filteredReels.length ? (
                 <CheckSquare className="w-4 h-4" />
@@ -149,7 +149,7 @@ export default function LabelsPrintStudioPage() {
               placeholder="Search Reel #, Size, Mill..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full bg-[#162035] border border-[#23314e] focus:border-amber-500 rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder-slate-400 outline-none"
+              className="w-full bg-slate-50 border border-slate-200 focus:border-amber-500 focus:bg-white rounded-xl pl-9 pr-3 py-2 text-xs text-slate-800 placeholder-slate-400 outline-none transition-colors"
             />
           </div>
 
@@ -162,28 +162,28 @@ export default function LabelsPrintStudioPage() {
                   onClick={() => toggleSelect(reel.id)}
                   className={`p-3 rounded-xl border cursor-pointer transition-all flex items-center justify-between ${
                     isChecked
-                      ? 'bg-amber-500/10 border-amber-500 shadow-sm'
-                      : 'bg-[#162035] border-[#22314e] hover:border-slate-500'
+                      ? 'bg-amber-50/70 border-amber-500 shadow-xs'
+                      : 'bg-slate-50 border-slate-200/80 hover:border-amber-500/40 hover:bg-slate-100/60'
                   }`}
                 >
                   <div className="flex items-center gap-3">
-                    <div className="text-amber-400">
-                      {isChecked ? <CheckSquare className="w-4 h-4" /> : <Square className="w-4 h-4 text-slate-500" />}
+                    <div className="text-amber-600">
+                      {isChecked ? <CheckSquare className="w-4 h-4" /> : <Square className="w-4 h-4 text-slate-400" />}
                     </div>
                     <div>
-                      <span className="font-mono font-bold text-white text-xs block">
+                      <span className="font-mono font-bold text-slate-900 text-xs block">
                         Reel #{reel.reelNo}
                       </span>
-                      <span className="text-[11px] text-slate-400">
+                      <span className="text-[11px] text-slate-500">
                         {reel.sizeDesc} • {reel.gsm} GSM
                       </span>
                     </div>
                   </div>
                   <div className="text-right">
-                    <span className="font-mono font-bold text-amber-400 text-xs block">
+                    <span className="font-mono font-bold text-amber-600 text-xs block">
                       {reel.weight} KG
                     </span>
-                    <span className="text-[10px] text-slate-400">{reel.millName}</span>
+                    <span className="text-[10px] text-slate-500">{reel.millName}</span>
                   </div>
                 </div>
               );
@@ -192,15 +192,15 @@ export default function LabelsPrintStudioPage() {
         </div>
 
         {/* Right: Printable Label Sheets Preview (7 cols) */}
-        <div className="lg:col-span-7 bg-[#111726] border border-[#1e293b] rounded-2xl p-6 shadow-xl overflow-y-auto max-h-[700px]">
-          <div className="mb-4 no-print flex items-center justify-between border-b border-[#1e293b] pb-3">
-            <h3 className="font-bold text-white text-sm">Label Sheet Preview ({selectedReelsList.length})</h3>
-            <span className="text-xs text-slate-400">Standard 4" × 3" Thermal Layout</span>
+        <div className="lg:col-span-7 theme-card bg-white border border-slate-200 rounded-2xl p-6 shadow-xs overflow-y-auto max-h-[700px]">
+          <div className="mb-4 no-print flex items-center justify-between border-b border-slate-200 pb-3">
+            <h3 className="font-bold text-slate-900 text-sm font-heading">Label Sheet Preview ({selectedReelsList.length})</h3>
+            <span className="text-xs text-slate-500 font-medium">Standard 4" × 3" Thermal Layout</span>
           </div>
 
           {selectedReelsList.length === 0 ? (
-            <div className="h-64 flex flex-col items-center justify-center text-center text-slate-400 no-print">
-              <QrCode className="w-12 h-12 text-[#23314e] mb-2" />
+            <div className="h-64 flex flex-col items-center justify-center text-center text-slate-500 no-print">
+              <QrCode className="w-12 h-12 text-slate-300 mb-2" />
               <p className="text-xs">No reels selected. Choose rolls from the left panel to preview printable labels.</p>
             </div>
           ) : (

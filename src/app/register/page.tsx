@@ -139,21 +139,21 @@ export default function StockRegisterPage() {
     switch (status) {
       case 'IN_STOCK':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono bg-emerald-50 text-emerald-700 border border-emerald-200">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
             FULL ROLL
           </span>
         );
       case 'PARTIAL':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono bg-amber-500/10 text-amber-400 border border-amber-500/20">
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono bg-amber-50 text-amber-700 border border-amber-200">
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
             PARTIAL
           </span>
         );
       case 'EXHAUSTED':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono bg-slate-500/10 text-slate-400 border border-slate-500/20">
+          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono bg-slate-100 text-slate-600 border border-slate-200">
             <span className="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
             EXHAUSTED
           </span>
@@ -166,34 +166,34 @@ export default function StockRegisterPage() {
       {/* Page Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-extrabold text-white tracking-tight flex items-center gap-2.5">
-            <Layers className="w-6 h-6 text-amber-400" />
+          <h2 className="text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2.5 font-heading">
+            <Layers className="w-6 h-6 text-amber-600" />
             Live Reel Stock Register
           </h2>
-          <p className="text-xs text-slate-400 mt-1">
-            Complete inventory matching Om Namasivayam Packaging ledger (Kraft, White, Ruby, Cut Sheets)
+          <p className="text-xs text-slate-500 mt-1 font-medium">
+            Complete inventory matching OM Namasivayam Packaging ledger (Kraft, White Liners, Fluting, Cut Sheets)
           </p>
         </div>
 
         <div className="flex items-center gap-3">
           {/* View toggle */}
-          <div className="bg-[#141d2f] border border-[#22314e] p-1 rounded-xl flex items-center text-xs">
+          <div className="bg-slate-100 border border-slate-200 p-1 rounded-xl flex items-center text-xs">
             <button
               onClick={() => setViewMode('grouped')}
-              className={`px-3 py-1.5 rounded-lg font-medium transition-all ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                 viewMode === 'grouped'
-                  ? 'bg-amber-500 text-white shadow-md'
-                  : 'text-slate-400 hover:text-slate-200'
+                  ? 'btn-theme-primary text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               Excel GSM Sections
             </button>
             <button
               onClick={() => setViewMode('flat')}
-              className={`px-3 py-1.5 rounded-lg font-medium transition-all ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                 viewMode === 'flat'
-                  ? 'bg-amber-500 text-white shadow-md'
-                  : 'text-slate-400 hover:text-slate-200'
+                  ? 'btn-theme-primary text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               Master Flat Table
@@ -202,16 +202,16 @@ export default function StockRegisterPage() {
 
           <button
             onClick={handleExportExcel}
-            className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#162035] hover:bg-[#202d4b] border border-[#22314e] text-amber-300 font-semibold text-xs shadow-md transition-colors"
+            className="flex items-center gap-2 px-4 py-2 rounded-xl btn-theme-secondary text-xs font-semibold"
           >
-            <Download className="w-4 h-4" />
+            <Download className="w-4 h-4 text-amber-600" />
             <span>Export Excel</span>
           </button>
         </div>
       </div>
 
       {/* Filter Toolbar */}
-      <div className="bg-[#111726] border border-[#1e293b] rounded-2xl p-4 shadow-xl flex flex-wrap items-center gap-3">
+      <div className="theme-card bg-white border border-slate-200 rounded-2xl p-4 shadow-xs flex flex-wrap items-center gap-3">
         <div className="relative flex-1 min-w-[220px]">
           <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
           <input
@@ -219,17 +219,17 @@ export default function StockRegisterPage() {
             placeholder="Search Reel #, Size (e.g. 90.5), Mill, GSM..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full bg-[#162035] border border-[#23314e] focus:border-amber-500 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-slate-400 outline-none"
+            className="w-full bg-slate-50 border border-slate-200 focus:border-amber-500 focus:bg-white rounded-xl pl-9 pr-4 py-2 text-xs text-slate-800 placeholder-slate-400 outline-none transition-colors"
           />
         </div>
 
         {/* GSM Filter */}
         <div className="flex items-center gap-1.5">
-          <span className="text-[11px] text-slate-400 uppercase font-semibold">GSM:</span>
+          <span className="text-[11px] text-slate-500 uppercase font-bold font-heading">GSM:</span>
           <select
             value={selectedGsm}
             onChange={(e) => setSelectedGsm(e.target.value)}
-            className="bg-[#162035] border border-[#23314e] text-xs text-white rounded-xl px-2.5 py-2 outline-none focus:border-amber-500"
+            className="bg-slate-50 border border-slate-200 text-xs text-slate-800 rounded-xl px-2.5 py-2 outline-none focus:border-amber-500 focus:bg-white transition-colors"
           >
             <option value="ALL">All GSM</option>
             {availableGsms.map((gsm) => (
@@ -242,11 +242,11 @@ export default function StockRegisterPage() {
 
         {/* Mill Filter */}
         <div className="flex items-center gap-1.5">
-          <span className="text-[11px] text-slate-400 uppercase font-semibold">Mill:</span>
+          <span className="text-[11px] text-slate-500 uppercase font-bold font-heading">Mill:</span>
           <select
             value={selectedMill}
             onChange={(e) => setSelectedMill(e.target.value)}
-            className="bg-[#162035] border border-[#23314e] text-xs text-white rounded-xl px-2.5 py-2 outline-none focus:border-amber-500"
+            className="bg-slate-50 border border-slate-200 text-xs text-slate-800 rounded-xl px-2.5 py-2 outline-none focus:border-amber-500 focus:bg-white transition-colors"
           >
             <option value="ALL">All Mills</option>
             {availableMills.map((mill) => (
@@ -259,11 +259,11 @@ export default function StockRegisterPage() {
 
         {/* Status Filter */}
         <div className="flex items-center gap-1.5">
-          <span className="text-[11px] text-slate-400 uppercase font-semibold">Status:</span>
+          <span className="text-[11px] text-slate-500 uppercase font-bold font-heading">Status:</span>
           <select
             value={selectedStatus}
             onChange={(e) => setSelectedStatus(e.target.value)}
-            className="bg-[#162035] border border-[#23314e] text-xs text-white rounded-xl px-2.5 py-2 outline-none focus:border-amber-500"
+            className="bg-slate-50 border border-slate-200 text-xs text-slate-800 rounded-xl px-2.5 py-2 outline-none focus:border-amber-500 focus:bg-white transition-colors"
           >
             <option value="ALL">All Status</option>
             <option value="IN_STOCK">Full Roll</option>
@@ -272,8 +272,8 @@ export default function StockRegisterPage() {
           </select>
         </div>
 
-        <div className="ml-auto text-xs text-slate-400 font-mono">
-          Showing <strong className="text-amber-400">{filteredReels.length}</strong> of {reels.length} rolls
+        <div className="ml-auto text-xs text-slate-500 font-mono">
+          Showing <strong className="text-amber-600 font-bold">{filteredReels.length}</strong> of {reels.length} rolls
         </div>
       </div>
 
@@ -291,15 +291,15 @@ export default function StockRegisterPage() {
             return (
               <div
                 key={category}
-                className="bg-[#111726] border border-[#1e293b] rounded-2xl overflow-hidden shadow-xl"
+                className="theme-card bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-xs"
               >
                 {/* Section Header Accordion */}
                 <div
                   onClick={() => toggleGroup(category)}
-                  className="px-6 py-4 bg-[#141c2e] border-b border-[#1e293b] flex flex-wrap items-center justify-between gap-3 cursor-pointer select-none hover:bg-[#18233a] transition-colors"
+                  className="px-6 py-4 bg-slate-50 border-b border-slate-200 flex flex-wrap items-center justify-between gap-3 cursor-pointer select-none hover:bg-slate-100/70 transition-colors"
                 >
                   <div className="flex items-center gap-3">
-                    <button className="text-amber-400">
+                    <button className="text-amber-600">
                       {isCollapsed ? (
                         <ChevronRight className="w-5 h-5" />
                       ) : (
@@ -307,9 +307,9 @@ export default function StockRegisterPage() {
                       )}
                     </button>
                     <div>
-                      <h3 className="font-bold text-white text-base tracking-tight flex items-center gap-2">
+                      <h3 className="font-bold text-slate-900 text-base tracking-tight flex items-center gap-2 font-heading">
                         {category}
-                        <span className="text-[11px] font-normal px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 font-mono">
+                        <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200 font-mono">
                           {items.length} rolls
                         </span>
                       </h3>
@@ -318,18 +318,18 @@ export default function StockRegisterPage() {
 
                   {/* Group Subtotals Banner */}
                   <div className="flex items-center gap-4 text-xs font-mono">
-                    <span className="text-slate-400">
-                      Inward: <strong className="text-slate-200">{groupTotalWeight.toFixed(1)} KG</strong>
+                    <span className="text-slate-500">
+                      Inward: <strong className="text-slate-800">{groupTotalWeight.toFixed(1)} KG</strong>
                     </span>
-                    <span className="text-slate-400">
-                      Used: <strong className="text-amber-400">{groupUsedWeight.toFixed(1)} KG</strong>
+                    <span className="text-slate-500">
+                      Used: <strong className="text-amber-600 font-bold">{groupUsedWeight.toFixed(1)} KG</strong>
                     </span>
-                    <span className="text-slate-400">
-                      Bal Stock: <strong className="text-emerald-400">{groupBalanceWeight.toFixed(1)} KG</strong>
+                    <span className="text-slate-500">
+                      Bal Stock: <strong className="text-emerald-600 font-bold">{groupBalanceWeight.toFixed(1)} KG</strong>
                     </span>
                     {!isOperator && (
-                      <span className="text-slate-400 pl-3 border-l border-[#243352]">
-                        Bal Value: <strong className="text-amber-400">{formatCurrency(groupBalanceAmount)}</strong>
+                      <span className="text-slate-500 pl-3 border-l border-slate-200">
+                        Bal Value: <strong className="text-amber-600 font-bold">{formatCurrency(groupBalanceAmount)}</strong>
                       </span>
                     )}
                   </div>
@@ -340,7 +340,7 @@ export default function StockRegisterPage() {
                   <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse text-xs">
                       <thead>
-                        <tr className="border-b border-[#23314e] text-slate-400 uppercase text-[10px] tracking-wider bg-[#0d121f]/60 font-semibold">
+                        <tr className="border-b border-slate-200 text-slate-600 uppercase text-[10px] tracking-wider bg-slate-50 font-heading font-bold">
                           <th className="py-2.5 px-3">SL</th>
                           <th className="py-2.5 px-3">Inward Date</th>
                           <th className="py-2.5 px-3">Reel #</th>
@@ -358,35 +358,35 @@ export default function StockRegisterPage() {
                           <th className="py-2.5 px-3 text-right">Actions</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-[#1e293b]/70 font-mono">
+                      <tbody className="divide-y divide-slate-100 font-mono">
                         {items.map((reel, idx) => (
                           <tr
                             key={reel.id}
-                            className={`hover:bg-[#162035]/70 transition-colors ${
-                              reel.status === 'EXHAUSTED' ? 'opacity-60 bg-[#0d121f]/30' : ''
+                            className={`hover:bg-amber-500/5 transition-colors ${
+                              reel.status === 'EXHAUSTED' ? 'opacity-60 bg-slate-50/50' : ''
                             }`}
                           >
-                            <td className="py-3 px-3 text-slate-500">{idx + 1}</td>
-                            <td className="py-3 px-3 text-slate-300 font-sans">{reel.inwardDate}</td>
-                            <td className="py-3 px-3 font-bold text-amber-400">{reel.reelNo}</td>
-                            <td className="py-3 px-3 font-sans font-semibold text-white">{reel.sizeDesc}</td>
-                            <td className="py-3 px-3 text-slate-300">{reel.gsm}</td>
-                            <td className="py-3 px-3 text-slate-300">{reel.bf || '-'}</td>
-                            <td className="py-3 px-3 text-right text-slate-300">{reel.weight}</td>
-                            <td className="py-3 px-3 text-right text-slate-400">{reel.usedWeight}</td>
-                            <td className="py-3 px-3 text-right font-bold text-emerald-400">
+                            <td className="py-3 px-3 text-slate-400">{idx + 1}</td>
+                            <td className="py-3 px-3 text-slate-600 font-sans">{reel.inwardDate}</td>
+                            <td className="py-3 px-3 font-bold text-amber-600">{reel.reelNo}</td>
+                            <td className="py-3 px-3 font-sans font-bold text-slate-900">{reel.sizeDesc}</td>
+                            <td className="py-3 px-3 text-slate-600">{reel.gsm}</td>
+                            <td className="py-3 px-3 text-slate-600">{reel.bf || '-'}</td>
+                            <td className="py-3 px-3 text-right text-slate-600">{reel.weight}</td>
+                            <td className="py-3 px-3 text-right text-slate-500">{reel.usedWeight}</td>
+                            <td className="py-3 px-3 text-right font-bold text-emerald-600">
                               {reel.balanceWeight}
                             </td>
-                            <td className="py-3 px-3 text-slate-400 font-sans">{reel.usedDate || '-'}</td>
+                            <td className="py-3 px-3 text-slate-500 font-sans">{reel.usedDate || '-'}</td>
                             {!isOperator && (
-                              <td className="py-3 px-3 text-right text-slate-300">₹{reel.pricePerKg}</td>
+                              <td className="py-3 px-3 text-right text-slate-700">₹{reel.pricePerKg}</td>
                             )}
                             {!isOperator && (
-                              <td className="py-3 px-3 text-right font-semibold text-amber-300">
+                              <td className="py-3 px-3 text-right font-bold text-amber-600">
                                 {formatCurrency(reel.balanceAmount)}
                               </td>
                             )}
-                            <td className="py-3 px-3 font-sans font-bold text-white">{reel.millName}</td>
+                            <td className="py-3 px-3 font-sans font-bold text-slate-900">{reel.millName}</td>
                             <td className="py-3 px-3 text-center font-sans">
                               {getStatusBadge(reel.status)}
                             </td>
@@ -395,14 +395,14 @@ export default function StockRegisterPage() {
                                 <button
                                   onClick={() => setQrReel(reel)}
                                   title="Print Label & QR"
-                                  className="p-1.5 rounded-lg bg-[#141d2f] hover:bg-amber-500/20 hover:text-amber-400 text-slate-400 border border-[#23314e] transition-colors"
+                                  className="p-1.5 rounded-lg bg-white hover:bg-amber-50 hover:text-amber-600 text-slate-600 border border-slate-200 transition-colors shadow-xs"
                                 >
-                                  <QrCode className="w-3.5 h-3.5" />
+                                  <QrCode className="w-3.5 h-3.5 text-amber-600" />
                                 </button>
                                 {reel.balanceWeight > 0 && (
                                   <button
                                     onClick={() => setConsumeReel(reel)}
-                                    className="px-2 py-1 rounded-lg bg-amber-500/10 hover:bg-amber-500 text-amber-400 hover:text-white font-semibold text-[11px] border border-amber-500/30 transition-all flex items-center gap-1"
+                                    className="px-2 py-1 rounded-lg bg-amber-50 hover:bg-amber-600 text-amber-700 hover:text-white font-bold text-[11px] border border-amber-200 transition-all flex items-center gap-1 shadow-xs"
                                   >
                                     <Scissors className="w-3 h-3" />
                                     <span>Issue</span>
@@ -422,11 +422,11 @@ export default function StockRegisterPage() {
         </div>
       ) : (
         /* Master Flat Table */
-        <div className="bg-[#111726] border border-[#1e293b] rounded-2xl overflow-hidden shadow-xl">
+        <div className="theme-card bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-xs">
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse text-xs">
               <thead>
-                <tr className="border-b border-[#23314e] text-slate-400 uppercase text-[10px] tracking-wider bg-[#0d121f]/70 font-semibold">
+                <tr className="border-b border-slate-200 text-slate-600 uppercase text-[10px] tracking-wider bg-slate-50 font-heading font-bold">
                   <th className="py-3 px-3">SL</th>
                   <th className="py-3 px-3">Inward Date</th>
                   <th className="py-3 px-3">Reel #</th>
@@ -444,35 +444,35 @@ export default function StockRegisterPage() {
                   <th className="py-3 px-3 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#1e293b]/70 font-mono">
+              <tbody className="divide-y divide-slate-100 font-mono">
                 {filteredReels.map((reel, idx) => (
                   <tr
                     key={reel.id}
-                    className={`hover:bg-[#162035]/70 transition-colors ${
-                      reel.status === 'EXHAUSTED' ? 'opacity-60 bg-[#0d121f]/30' : ''
+                    className={`hover:bg-amber-500/5 transition-colors ${
+                      reel.status === 'EXHAUSTED' ? 'opacity-60 bg-slate-50/50' : ''
                     }`}
                   >
-                    <td className="py-3 px-3 text-slate-500">{idx + 1}</td>
-                    <td className="py-3 px-3 font-sans text-slate-300">{reel.inwardDate}</td>
-                    <td className="py-3 px-3 font-bold text-amber-400">{reel.reelNo}</td>
-                    <td className="py-3 px-3 font-sans text-slate-400">{reel.category}</td>
-                    <td className="py-3 px-3 font-sans font-bold text-white">{reel.sizeDesc}</td>
-                    <td className="py-3 px-3 text-slate-300">{reel.gsm}</td>
-                    <td className="py-3 px-3 text-slate-300">{reel.bf || '-'}</td>
-                    <td className="py-3 px-3 text-right text-slate-300">{reel.weight}</td>
-                    <td className="py-3 px-3 text-right text-slate-400">{reel.usedWeight}</td>
-                    <td className="py-3 px-3 text-right font-bold text-emerald-400">
+                    <td className="py-3 px-3 text-slate-400">{idx + 1}</td>
+                    <td className="py-3 px-3 font-sans text-slate-600">{reel.inwardDate}</td>
+                    <td className="py-3 px-3 font-bold text-amber-600">{reel.reelNo}</td>
+                    <td className="py-3 px-3 font-sans text-slate-500">{reel.category}</td>
+                    <td className="py-3 px-3 font-sans font-bold text-slate-900">{reel.sizeDesc}</td>
+                    <td className="py-3 px-3 text-slate-600">{reel.gsm}</td>
+                    <td className="py-3 px-3 text-slate-600">{reel.bf || '-'}</td>
+                    <td className="py-3 px-3 text-right text-slate-600">{reel.weight}</td>
+                    <td className="py-3 px-3 text-right text-slate-500">{reel.usedWeight}</td>
+                    <td className="py-3 px-3 text-right font-bold text-emerald-600">
                       {reel.balanceWeight}
                     </td>
                     {!isOperator && (
-                      <td className="py-3 px-3 text-right text-slate-300">₹{reel.pricePerKg}</td>
+                      <td className="py-3 px-3 text-right text-slate-700">₹{reel.pricePerKg}</td>
                     )}
                     {!isOperator && (
-                      <td className="py-3 px-3 text-right font-semibold text-amber-300">
+                      <td className="py-3 px-3 text-right font-bold text-amber-600">
                         {formatCurrency(reel.balanceAmount)}
                       </td>
                     )}
-                    <td className="py-3 px-3 font-sans font-bold text-white">{reel.millName}</td>
+                    <td className="py-3 px-3 font-sans font-bold text-slate-900">{reel.millName}</td>
                     <td className="py-3 px-3 text-center font-sans">
                       {getStatusBadge(reel.status)}
                     </td>
@@ -481,14 +481,14 @@ export default function StockRegisterPage() {
                         <button
                           onClick={() => setQrReel(reel)}
                           title="Print Label & QR"
-                          className="p-1.5 rounded-lg bg-[#141d2f] hover:bg-amber-500/20 hover:text-amber-400 text-slate-400 border border-[#23314e] transition-colors"
+                          className="p-1.5 rounded-lg bg-white hover:bg-amber-50 hover:text-amber-600 text-slate-600 border border-slate-200 transition-colors shadow-xs"
                         >
-                          <QrCode className="w-3.5 h-3.5" />
+                          <QrCode className="w-3.5 h-3.5 text-amber-600" />
                         </button>
                         {reel.balanceWeight > 0 && (
                           <button
                             onClick={() => setConsumeReel(reel)}
-                            className="px-2 py-1 rounded-lg bg-amber-500/10 hover:bg-amber-500 text-amber-400 hover:text-white font-semibold text-[11px] border border-amber-500/30 transition-all flex items-center gap-1"
+                            className="px-2 py-1 rounded-lg bg-amber-50 hover:bg-amber-600 text-amber-700 hover:text-white font-bold text-[11px] border border-amber-200 transition-all flex items-center gap-1 shadow-xs"
                           >
                             <Scissors className="w-3 h-3" />
                             <span>Issue</span>

@@ -48,17 +48,17 @@ export default function QRCodeModal({ reel, isOpen, onClose }: QRCodeModalProps)
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-[#111726] border border-[#23314e] rounded-2xl w-full max-w-md shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 no-print">
+    <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
+      <div className="bg-white border border-slate-200 rounded-2xl w-full max-w-md shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 no-print">
         {/* Header */}
-        <div className="px-5 py-4 bg-[#162035] border-b border-[#23314e] flex items-center justify-between">
+        <div className="px-5 py-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <QrIcon className="w-5 h-5 text-amber-400" />
-            <h3 className="font-semibold text-white text-sm">Reel Label & QR Sticker</h3>
+            <QrIcon className="w-5 h-5 text-amber-600" />
+            <h3 className="font-heading font-bold text-slate-900 text-sm">Reel Label & QR Sticker</h3>
           </div>
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-[#1f2d4a]"
+            className="text-slate-400 hover:text-slate-700 p-1 rounded-lg hover:bg-slate-100 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -130,20 +130,20 @@ export default function QRCodeModal({ reel, isOpen, onClose }: QRCodeModalProps)
         </div>
 
         {/* Modal Actions */}
-        <div className="px-6 py-4 bg-[#141b2c] border-t border-[#23314e] flex items-center justify-between">
-          <p className="text-[11px] text-slate-400">
+        <div className="px-6 py-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between">
+          <p className="text-[11px] text-slate-500">
             Print on standard 4" × 4" thermal sticker
           </p>
           <div className="flex items-center gap-2">
             <button
               onClick={onClose}
-              className="px-3 py-1.5 rounded-lg border border-[#23314e] text-xs text-slate-400 hover:text-white"
+              className="btn-theme-secondary px-3 py-1.5 rounded-xl text-xs text-slate-700 hover:text-slate-900 transition-colors"
             >
               Close
             </button>
             <button
               onClick={handlePrint}
-              className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-medium text-xs shadow-lg shadow-amber-500/20"
+              className="btn-theme-primary flex items-center gap-1.5 px-4 py-2 rounded-xl text-white font-heading font-bold text-xs shadow-md shadow-amber-500/20"
             >
               <Printer className="w-4 h-4" />
               <span>Print Label</span>

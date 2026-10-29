@@ -125,9 +125,11 @@ export default function ConsumptionPage() {
         throw new Error(data.error || 'Failed to issue reel');
       }
 
-      setSuccessMsg(
-        `Successfully consumed ${numConsumed} KG from Reel #${selectedReel.reelNo}! Balance remaining: ${data.data.reel.balanceWeight} KG`
-      );
+      let successText = `Successfully consumed ${numConsumed} KG from Reel #${selectedReel.reelNo}! Balance remaining: ${data.data.reel.balanceWeight} KG`;
+      if (data.data?.emailAlert?.triggered) {
+        successText += ` • ⚠️ Low Balance Alert (<= 20%): Email sent to owner (${data.data.emailAlert.recipient})`;
+      }
+      setSuccessMsg(successText);
       setSelectedReel(null);
       setConsumedWeight('');
       setJobOrderNo('');
@@ -144,26 +146,26 @@ export default function ConsumptionPage() {
     <div className="space-y-6 max-w-7xl mx-auto">
       {/* Header */}
       <div>
-        <h2 className="text-2xl font-extrabold text-white tracking-tight flex items-center gap-2.5">
-          <Scissors className="w-6 h-6 text-amber-400" />
+        <h2 className="text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2.5 font-heading">
+          <Scissors className="w-6 h-6 text-amber-600" />
           Reel Consumption & Machine Issue (Stock Out)
         </h2>
-        <p className="text-xs text-slate-400 mt-1">
+        <p className="text-xs text-slate-500 mt-1 font-medium">
           Issue paper rolls to corrugation lines or sheeters, log partial usages, and maintain real-time roll balance.
         </p>
       </div>
 
       {/* Notifications */}
       {successMsg && (
-        <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs flex items-center gap-2">
-          <CheckCircle2 className="w-5 h-5 shrink-0" />
+        <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center gap-2 shadow-xs">
+          <CheckCircle2 className="w-5 h-5 shrink-0 text-emerald-600" />
           <span className="font-semibold">{successMsg}</span>
         </div>
       )}
 
       {errorMsg && (
-        <div className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs flex items-center gap-2">
-          <AlertCircle className="w-5 h-5 shrink-0" />
+        <div className="p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-center gap-2 shadow-xs">
+          <AlertCircle className="w-5 h-5 shrink-0 text-rose-600" />
           <span className="font-semibold">{errorMsg}</span>
         </div>
       )}
@@ -171,9 +173,9 @@ export default function ConsumptionPage() {
       {/* Main Grid: Selection & Issue Form */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Col: Roll Selection & Lookup (5 cols) */}
-        <div className="lg:col-span-5 bg-[#111726] border border-[#1e293b] rounded-2xl p-5 shadow-xl flex flex-col h-[620px]">
-          <h3 className="font-bold text-white text-sm mb-3 flex items-center gap-2">
-            <Layers className="w-4 h-4 text-amber-400" />
+        <div className="lg:col-span-5 theme-card bg-white border border-slate-200 rounded-2xl p-5 shadow-xs flex flex-col h-[620px]">
+          <h3 className="font-bold text-slate-900 text-sm mb-3 flex items-center gap-2 font-heading">
+            <Layers className="w-4 h-4 text-amber-600" />
             Select Roll to Issue ({availableReels.length} Available)
           </h3>
 
@@ -184,7 +186,7 @@ export default function ConsumptionPage() {
               placeholder="Search Reel #, Size (e.g. 90.5), Mill..."
               value={searchReel}
               onChange={(e) => setSearchReel(e.target.value)}
-              className="w-full bg-[#162035] border border-[#23314e] focus:border-amber-500 rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder-slate-400 outline-none"
+              className="w-full bg-slate-50 border border-slate-200 focus:border-amber-500 focus:bg-white rounded-xl pl-9 pr-3 py-2 text-xs text-slate-800 placeholder-slate-400 outline-none transition-colors"
             />
           </div>
 
@@ -207,21 +209,21 @@ export default function ConsumptionPage() {
                     onClick={() => handleSelectReel(r)}
                     className={`p-3 rounded-xl border cursor-pointer transition-all ${
                       isSelected
-                        ? 'bg-amber-500/10 border-amber-500 shadow-md shadow-amber-500/10'
-                        : 'bg-[#162035] border-[#22314e] hover:border-amber-500/40 hover:bg-[#1a263f]'
+                        ? 'bg-amber-50/70 border-amber-500 shadow-xs'
+                        : 'bg-slate-50 border-slate-200/80 hover:border-amber-500/40 hover:bg-slate-100/60'
                     }`}
                   >
                     <div className="flex items-center justify-between mb-1">
-                      <span className="font-bold font-mono text-amber-400 text-sm">
+                      <span className="font-bold font-mono text-amber-600 text-sm">
                         Reel #{r.reelNo}
                       </span>
-                      <span className="text-[10px] font-mono font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+                      <span className="text-[10px] font-mono font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
                         {r.balanceWeight} KG Bal
                       </span>
                     </div>
-                    <div className="flex items-center justify-between text-xs text-slate-300">
+                    <div className="flex items-center justify-between text-xs text-slate-700">
                       <span>{r.sizeDesc} • {r.gsm} GSM</span>
-                      <span className="text-slate-400">{r.millName}</span>
+                      <span className="text-slate-500">{r.millName}</span>
                     </div>
                   </div>
                 );
@@ -230,35 +232,35 @@ export default function ConsumptionPage() {
         </div>
 
         {/* Right Col: Issue / Consumption Workspace (7 cols) */}
-        <div className="lg:col-span-7 bg-[#111726] border border-[#1e293b] rounded-2xl p-6 shadow-xl flex flex-col justify-between">
+        <div className="lg:col-span-7 theme-card bg-white border border-slate-200 rounded-2xl p-6 shadow-xs flex flex-col justify-between">
           {selectedReel ? (
             <form onSubmit={handleIssueSubmit} className="space-y-5">
               {/* Selected Roll Header Card */}
-              <div className="p-4 rounded-xl bg-[#162035] border border-amber-500/30">
+              <div className="p-4 rounded-xl bg-slate-50 border border-amber-300/60 shadow-xs">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase bg-amber-100 text-amber-800 border border-amber-200">
                     Selected For Issue
                   </span>
-                  <span className="text-xs text-slate-400 font-mono">
+                  <span className="text-xs text-slate-500 font-mono">
                     Inward Date: {selectedReel.inwardDate}
                   </span>
                 </div>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center text-xs mt-2 pt-2 border-t border-[#22314e]">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center text-xs mt-2 pt-2 border-t border-slate-200">
                   <div>
-                    <span className="text-[10px] text-slate-400 block uppercase">Reel #</span>
-                    <strong className="text-amber-400 font-mono text-sm">{selectedReel.reelNo}</strong>
+                    <span className="text-[10px] text-slate-500 block uppercase">Reel #</span>
+                    <strong className="text-amber-600 font-mono text-sm">{selectedReel.reelNo}</strong>
                   </div>
                   <div>
-                    <span className="text-[10px] text-slate-400 block uppercase">Mill</span>
-                    <strong className="text-white text-xs">{selectedReel.millName}</strong>
+                    <span className="text-[10px] text-slate-500 block uppercase">Mill</span>
+                    <strong className="text-slate-900 text-xs">{selectedReel.millName}</strong>
                   </div>
                   <div>
-                    <span className="text-[10px] text-slate-400 block uppercase">Deckle / GSM</span>
-                    <strong className="text-white text-xs">{selectedReel.sizeDesc} • {selectedReel.gsm}G</strong>
+                    <span className="text-[10px] text-slate-500 block uppercase">Deckle / GSM</span>
+                    <strong className="text-slate-900 text-xs">{selectedReel.sizeDesc} • {selectedReel.gsm}G</strong>
                   </div>
                   <div>
-                    <span className="text-[10px] text-slate-400 block uppercase">Current Balance</span>
-                    <strong className="text-emerald-400 font-mono text-sm">{selectedReel.balanceWeight} KG</strong>
+                    <span className="text-[10px] text-slate-500 block uppercase">Current Balance</span>
+                    <strong className="text-emerald-600 font-mono text-sm">{selectedReel.balanceWeight} KG</strong>
                   </div>
                 </div>
               </div>
@@ -268,13 +270,13 @@ export default function ConsumptionPage() {
                 {/* Weight Input */}
                 <div className="space-y-1.5">
                   <div className="flex items-center justify-between">
-                    <label className="text-xs font-semibold text-slate-200">
-                      Consumed Weight (KG) <span className="text-rose-400">*</span>
+                    <label className="text-xs font-semibold text-slate-700">
+                      Consumed Weight (KG) <span className="text-rose-500">*</span>
                     </label>
                     <button
                       type="button"
                       onClick={handleFullRoll}
-                      className="text-xs text-amber-400 hover:text-amber-300 font-semibold underline"
+                      className="text-xs text-amber-600 hover:text-amber-700 font-semibold underline"
                     >
                       Use Full Roll ({selectedReel.balanceWeight} KG)
                     </button>
@@ -289,20 +291,20 @@ export default function ConsumptionPage() {
                       onChange={(e) => setConsumedWeight(e.target.value)}
                       placeholder={`Enter KG consumed on machine (Max: ${selectedReel.balanceWeight})`}
                       required
-                      className="w-full bg-[#162035] border border-[#243352] focus:border-amber-500 rounded-xl px-4 py-3 text-base text-white font-mono font-bold placeholder-slate-500 outline-none"
+                      className="w-full bg-slate-50 border border-slate-200 focus:border-amber-500 focus:bg-white rounded-xl px-4 py-3 text-base text-slate-800 font-mono font-bold placeholder-slate-400 outline-none transition-colors"
                     />
-                    <span className="absolute right-4 top-1/2 -translate-y-1/2 font-bold text-xs text-slate-400">
+                    <span className="absolute right-4 top-1/2 -translate-y-1/2 font-bold text-xs text-slate-500">
                       KG
                     </span>
                   </div>
                 </div>
 
                 {/* Balance Prediction Card */}
-                <div className="p-3.5 rounded-xl bg-[#0d121f] border border-[#1e293b] flex items-center justify-between text-xs">
-                  <span className="text-slate-400">Remaining Balance after this run:</span>
+                <div className="p-3.5 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-between text-xs">
+                  <span className="text-slate-600 font-medium">Remaining Balance after this run:</span>
                   <span
                     className={`font-mono font-bold text-sm ${
-                      balanceAfter === 0 ? 'text-slate-400' : 'text-emerald-400'
+                      balanceAfter === 0 ? 'text-slate-500' : 'text-emerald-600'
                     }`}
                   >
                     {balanceAfter.toFixed(2)} KG {balanceAfter === 0 && '(Roll Completely Closed)'}
@@ -312,11 +314,11 @@ export default function ConsumptionPage() {
                 {/* Machine Line & Date */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                   <div className="space-y-1.5">
-                    <label className="font-semibold text-slate-300">Corrugator / Machine Line</label>
+                    <label className="font-semibold text-slate-700">Corrugator / Machine Line</label>
                     <select
                       value={machineId}
                       onChange={(e) => setMachineId(e.target.value)}
-                      className="w-full bg-[#162035] border border-[#243352] rounded-xl px-3 py-2 text-white outline-none"
+                      className="w-full bg-slate-50 border border-slate-200 focus:border-amber-500 focus:bg-white rounded-xl px-3 py-2 text-slate-800 outline-none transition-colors"
                     >
                       <option value="Corrugator Line 1">Corrugator Line 1 (Main Fluter)</option>
                       <option value="Corrugator Line 2">Corrugator Line 2</option>
@@ -326,12 +328,12 @@ export default function ConsumptionPage() {
                     </select>
                   </div>
                   <div className="space-y-1.5">
-                    <label className="font-semibold text-slate-300">Consumption Date</label>
+                    <label className="font-semibold text-slate-700">Consumption Date</label>
                     <input
                       type="date"
                       value={consumedDate}
                       onChange={(e) => setConsumedDate(e.target.value)}
-                      className="w-full bg-[#162035] border border-[#243352] rounded-xl px-3 py-2 text-white outline-none"
+                      className="w-full bg-slate-50 border border-slate-200 focus:border-amber-500 focus:bg-white rounded-xl px-3 py-2 text-slate-800 outline-none transition-colors"
                     />
                   </div>
                 </div>
@@ -339,41 +341,41 @@ export default function ConsumptionPage() {
                 {/* Job Order & Remarks */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                   <div className="space-y-1.5">
-                    <label className="font-semibold text-slate-300">Job Order / Box Reference</label>
+                    <label className="font-semibold text-slate-700">Job Order / Box Reference</label>
                     <input
                       type="text"
                       placeholder="e.g. JO-4011 / 5-Ply Master Carton"
                       value={jobOrderNo}
                       onChange={(e) => setJobOrderNo(e.target.value)}
-                      className="w-full bg-[#162035] border border-[#243352] rounded-xl px-3 py-2 text-white outline-none placeholder-slate-500"
+                      className="w-full bg-slate-50 border border-slate-200 focus:border-amber-500 focus:bg-white rounded-xl px-3 py-2 text-slate-800 outline-none placeholder-slate-400 transition-colors"
                     />
                   </div>
                   <div className="space-y-1.5">
-                    <label className="font-semibold text-slate-300">Operator Remarks</label>
+                    <label className="font-semibold text-slate-700">Operator Remarks</label>
                     <input
                       type="text"
                       placeholder="e.g. 200 boxes run, remaining 141 kg"
                       value={remarks}
                       onChange={(e) => setRemarks(e.target.value)}
-                      className="w-full bg-[#162035] border border-[#243352] rounded-xl px-3 py-2 text-white outline-none placeholder-slate-500"
+                      className="w-full bg-slate-50 border border-slate-200 focus:border-amber-500 focus:bg-white rounded-xl px-3 py-2 text-slate-800 outline-none placeholder-slate-400 transition-colors"
                     />
                   </div>
                 </div>
               </div>
 
               {/* Submit Buttons */}
-              <div className="pt-4 border-t border-[#1e293b] flex items-center justify-end gap-3">
+              <div className="pt-4 border-t border-slate-200 flex items-center justify-end gap-3">
                 <button
                   type="button"
                   onClick={() => setSelectedReel(null)}
-                  className="px-4 py-2 rounded-xl border border-[#23314e] text-xs text-slate-400 hover:text-white"
+                  className="px-4 py-2 rounded-xl border border-slate-200 text-xs text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-semibold text-xs shadow-lg shadow-amber-500/20 disabled:opacity-50"
+                  className="flex items-center gap-2 px-6 py-2.5 btn-theme-primary text-xs font-bold disabled:opacity-50"
                 >
                   <Scissors className="w-4 h-4" />
                   <span>{submitting ? 'Recording Issue...' : 'Confirm Roll Issue'}</span>
@@ -381,10 +383,10 @@ export default function ConsumptionPage() {
               </div>
             </form>
           ) : (
-            <div className="h-full flex flex-col items-center justify-center text-center p-8 text-slate-400">
-              <Scissors className="w-16 h-16 text-[#243352] mb-3" />
-              <h4 className="text-base font-bold text-white mb-1">No Reel Selected</h4>
-              <p className="text-xs max-w-sm">
+            <div className="h-full flex flex-col items-center justify-center text-center p-8 text-slate-500">
+              <Scissors className="w-16 h-16 text-slate-300 mb-3" />
+              <h4 className="text-base font-bold text-slate-800 mb-1">No Reel Selected</h4>
+              <p className="text-xs max-w-sm text-slate-500">
                 Select a roll from the left panel or search by Reel Number to record machine consumption.
               </p>
             </div>
@@ -393,21 +395,21 @@ export default function ConsumptionPage() {
       </div>
 
       {/* Consumption History Table */}
-      <div className="bg-[#111726] border border-[#1e293b] rounded-2xl p-6 shadow-xl">
+      <div className="theme-card bg-white border border-slate-200 rounded-2xl p-6 shadow-xs">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h3 className="font-bold text-white text-base flex items-center gap-2">
-              <Clock className="w-5 h-5 text-amber-400" />
+            <h3 className="font-bold text-slate-900 text-base flex items-center gap-2 font-heading">
+              <Clock className="w-5 h-5 text-amber-600" />
               Recent Consumption & Issue Logs
             </h3>
-            <p className="text-xs text-slate-400">Audit trail of paper rolls issued to machines</p>
+            <p className="text-xs text-slate-500 font-medium">Audit trail of paper rolls issued to machines</p>
           </div>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
-              <tr className="border-b border-[#23314e] text-slate-400 uppercase text-[10px] tracking-wider bg-[#0d121f]/50">
+              <tr className="border-b border-slate-200 text-slate-600 uppercase text-[10px] tracking-wider bg-slate-50 font-heading font-bold">
                 <th className="py-3 px-3">Date</th>
                 <th className="py-3 px-3">Reel #</th>
                 <th className="py-3 px-3 text-right">Consumed (KG)</th>
@@ -418,7 +420,7 @@ export default function ConsumptionPage() {
                 <th className="py-3 px-3">Operator</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#1e293b]/70 font-mono">
+            <tbody className="divide-y divide-slate-100 font-mono">
               {logs.length === 0 ? (
                 <tr>
                   <td colSpan={8} className="py-8 text-center text-slate-500 font-sans">
@@ -427,23 +429,23 @@ export default function ConsumptionPage() {
                 </tr>
               ) : (
                 logs.map((log) => (
-                  <tr key={log.id} className="hover:bg-[#162035]/50 transition-colors">
-                    <td className="py-3 px-3 font-sans text-slate-300">{log.consumedDate}</td>
-                    <td className="py-3 px-3 font-bold text-amber-400">{log.reelNo}</td>
-                    <td className="py-3 px-3 text-right text-rose-400 font-bold">
+                  <tr key={log.id} className="hover:bg-amber-500/5 transition-colors">
+                    <td className="py-3 px-3 font-sans text-slate-600">{log.consumedDate}</td>
+                    <td className="py-3 px-3 font-bold text-amber-600">{log.reelNo}</td>
+                    <td className="py-3 px-3 text-right text-rose-600 font-bold">
                       -{log.consumedWeight} KG
                     </td>
-                    <td className="py-3 px-3 text-right text-emerald-400">
+                    <td className="py-3 px-3 text-right text-emerald-600">
                       {log.balanceAfter} KG
                     </td>
                     {!isOperator && (
-                      <td className="py-3 px-3 text-right text-amber-300">
+                      <td className="py-3 px-3 text-right text-slate-800 font-medium">
                         ₹{log.amount.toLocaleString('en-IN', { maximumFractionDigits: 1 })}
                       </td>
                     )}
-                    <td className="py-3 px-3 font-sans text-white">{log.machineId || 'Corrugator'}</td>
-                    <td className="py-3 px-3 font-sans text-slate-400">{log.jobOrderNo || '-'}</td>
-                    <td className="py-3 px-3 font-sans text-slate-400">{log.recordedBy}</td>
+                    <td className="py-3 px-3 font-sans font-semibold text-slate-900">{log.machineId || 'Corrugator'}</td>
+                    <td className="py-3 px-3 font-sans text-slate-500">{log.jobOrderNo || '-'}</td>
+                    <td className="py-3 px-3 font-sans text-slate-500">{log.recordedBy}</td>
                   </tr>
                 ))
               )}
